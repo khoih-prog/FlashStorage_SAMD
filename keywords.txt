@@ -1,0 +1,33 @@
+############################################
+# Syntax Coloring Map For FlashStorage_SAMD
+############################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+FlashClass	KEYWORD1
+FlashStorageClass KEYWORD1
+EEPROMClass KEYWORD1
+EEPROM_EMULATION  KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+write KEYWORD2
+erase KEYWORD2
+read KEYWORD2
+read_unaligned_uint32 KEYWORD2
+
+update KEYWORD2
+isValid KEYWORD2
+commit KEYWORD2
+length	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+#	LITERAL1
+
+EEPROM_EMULATION_SIZE  LITERAL1
