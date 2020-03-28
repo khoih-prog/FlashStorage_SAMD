@@ -1,5 +1,6 @@
 # FlashStorage_SAMD library for Arduino
 
+[![arduino-library-badge](https://www.ardu-badge.com/badge/FlashStorage_SAMD.svg?)](https://www.ardu-badge.com/FlashStorage_SAMD)
 
 ### Initial Version v1.0.0
 1. Add support to SAMD51 family such as Itsy-Bitsy M4, etc.
