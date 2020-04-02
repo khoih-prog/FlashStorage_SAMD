@@ -1,6 +1,6 @@
 # FlashStorage_SAMD library for Arduino
 
-[![arduino-library-badge](https://www.ardu-badge.com/badge/FlashStorage_SAMD.svg?)](https://www.ardu-badge.com/FlashStorage_SAMD)
+It's always preferable to use the original just-updated-to-support-SAMD51 library [FlashStorage](https://github.com/cmaglie/FlashStorage), unless you need to use some new and different features to be added in the future, if any.
 
 ### Initial Version v1.0.0
 1. Add support to SAMD51 family such as Itsy-Bitsy M4, etc.
@@ -36,10 +36,6 @@ The same caution must be taken if you're using the EEPROM API emulation (see
 below) with the `EEPROM.commit()` function.
 
 ## Installation
-
-### Use Arduino Library Manager
-The best and easiest way is to use `Arduino Library Manager`. Search for `FlashStorage_SAMD`, then select / install the latest version.
-You can also use this link [![arduino-library-badge](https://www.ardu-badge.com/badge/FlashStorage_SAMD.svg?)](https://www.ardu-badge.com/FlashStorage_SAMD) for more detailed instructions.
 
 ### Manual Install
 
@@ -200,7 +196,7 @@ In the absence of an EEPROM you can use this library to use a piece of the flash
 as an alternative to EEPROM but you must always keep in mind his limits.
 
 ### Contributions and thanks
-1. Forked and modified from [Cristian Maglie's FlashStorage](https://github.com/cmaglie/FlashStorage). All the credits go to [Cristian Maglie](https://github.com/cmaglie)
+1. Based on and modified from [Cristian Maglie's FlashStorage](https://github.com/cmaglie/FlashStorage). All the credits go to [Cristian Maglie](https://github.com/cmaglie)
 
 ## Contributing
 
