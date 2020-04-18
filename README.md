@@ -1,5 +1,10 @@
 # FlashStorage_SAMD library for Arduino
 
+[![GitHub release](https://img.shields.io/github/release/khoih-prog/FlashStorage_SAMD.svg)](https://github.com/khoih-prog/FlashStorage_SAMD/releases)
+[![GitHub](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/khoih-prog/FlashStorage_SAMD/blob/master/LICENSE)
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](#Contributing)
+[![GitHub issues](https://img.shields.io/github/issues/khoih-prog/FlashStorage_SAMD.svg)](http://github.com/khoih-prog/FlashStorage_SAMD/issues)
+
 It's always preferable to use the original just-updated-to-support-SAMD51 library [FlashStorage](https://github.com/cmaglie/FlashStorage), unless you need to use some new and different features to be added in the future, if any.
 
 ### Initial Version v1.0.0
