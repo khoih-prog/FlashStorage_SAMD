@@ -1,13 +1,34 @@
 {
-    "name": "FlashStorage_SAMD",
-    "keywords": "storage,data",
-    "description": "The FlashStorage library aims to provide a convenient way to store and retrieve user's data using the non-volatile flash memory of microcontrollers. Now supporting SAMD21 and SAMD51",
-    "repository":
+  "name": "FlashStorage_SAMD",
+  "version": "1.0.0",
+  "keywords": "storage,data",
+  "description": "The FlashStorage library aims to provide a convenient way to store and retrieve user's data using the non-volatile flash memory of microcontrollers. Now supporting SAMD21 and SAMD51",
+  "authors": [
     {
-        "type": "git",
-        "url": "https://github.com/khoih-prog/FlashStorage_SAMD"
+      "name":  "Cristian Maglie",
+      "url":   "https://github.com/cmaglie",
+      "email": "c.maglie@bug.st"
     },
-    "version": "1.0.0",
-    "frameworks": "arduino",
-    "platforms": "atmelsam"
+    {
+      "name":  "Khoi Hoang",
+      "url":   "https://github.com/khoih-prog",
+      "email": "khoih.prog@gmail.com",
+      "maintainer": true
+    }
+  ],
+  "repository":
+  {
+      "type": "git",
+      "url": "https://github.com/khoih-prog/FlashStorage_SAMD"
+  },
+  "homepage": "https://github.com/khoih-prog/FlashStorage_SAMD",
+  "export": {
+    "exclude": [
+      "linux",
+      "extras",
+      "tests"
+    ]
+  },  
+  "frameworks": "arduino",
+  "platforms": "atmelsam"
 }
