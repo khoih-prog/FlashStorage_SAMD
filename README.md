@@ -10,38 +10,31 @@
 
 ### Initial Version v1.0.0
 
-1. Add support to SAMD51 family such as Itsy-Bitsy M4, etc.
+1. Add support to SAMD51 family such as 
 
-Library is based on and modified from:
+  - Adafruit SAMD51 (M4): Metro M4, Grand Central M4, ItsyBitsy M4, Feather M4 Express, Trellis M4, Metro M4 AirLift Lite, MONSTER M4SK Express, Hallowing M4, etc.
+  - Seeeduino: Wio Terminal, Grove UI WirelessAdafruit Itsy-Bitsy M4, etc.
 
-1. [Cristian Maglie's FlashStorage](https://github.com/cmaglie/FlashStorage)
+This [**FlashStorage_SAMD library**](https://github.com/khoih-prog/FlashStorage_SAMD) is based on and modified from:
 
-The FlashStorage library aims to provide a convenient way to store and retrieve
-user's data using the non-volatile flash memory of microcontrollers.
+1. [**Cristian Maglie's FlashStorage**](https://github.com/cmaglie/FlashStorage)
 
-The flash memory, due to his properties, is generally used to store the firmware
-code, but it can also be used to store user data.
+The FlashStorage library aims to provide a convenient way to store and retrieve user's data using the non-volatile flash memory of microcontrollers.
 
-## Supported hardware
+The flash memory, due to its properties, is generally used to store the firmware code, but it can also be used to store user data.
 
-Currently, **ATSAMD21 and ATSAMD51** are supported (and consequently every board based on 
-this cpu like the **Arduino Zero, Aduino MKR1000, Nano-33 IoT, Itsy-Bitsy M4, etc**).
+### Supported hardware
 
-## Limited number of writes
+Currently, **ATSAMD21 and ATSAMD51** are supported (and consequently every board based on this MPU like the **Arduino Zero, Aduino MKR1000, Nano-33 IoT, Itsy-Bitsy M4, etc**).
 
-The flash memory has a limited amount of write cycles. Typical flash
-memories can perform about 10000 writes cycles to the same flash block
-before starting to "wear out" and begin to lose the ability to retain data.
+### Limited number of writes
 
-So **BEWARE: IMPROPER USE OF THIS LIBRARY CAN QUICKLY AND PERMANENTLY
-DESTROY THE FLASH MEMORY OF YOUR MICRO**, in particular you should avoid to
-call the `write()` function too often and make sure that in the entire life
-of the micro the number of calls to `write` stay well below the above limit
-of 10000 (it's a good rule-of-thumb to keep that number in mind even if the
+The flash memory has a limited amount of write cycles. Typical flash memories can perform about 10000 writes cycles to the same flash block before starting to "wear out" and begin to lose the ability to retain data.
+
+So **BEWARE: IMPROPER USE OF THIS LIBRARY CAN QUICKLY AND PERMANENTLY DESTROY THE FLASH MEMORY OF YOUR MICRO**, in particular you should avoid to call the `write()` function too often and make sure that in the entire life of the micro the number of calls to `write` stay well below the above limit of 10000 (it's a good rule-of-thumb to keep that number in mind even if the
 manufacturer of the micro guarantees a bigger number of cycles).
 
-The same caution must be taken if you're using the EEPROM API emulation (see
-below) with the `EEPROM.commit()` function.
+The same caution must be taken if you're using the EEPROM API emulation (see below) with the `EEPROM.commit()` function.
 
 ---
 ---
@@ -50,8 +43,8 @@ below) with the `EEPROM.commit()` function.
 
  1. [`Arduino IDE v1.8.13+` for Arduino](https://www.arduino.cc/en/Main/Software)
  2. [`Arduino SAMD core v1.8.9+`](https://www.arduino.cc/en/Guide/ArduinoM0) for SAMD ARM Cortex-M0+ boards. **Ready** from v1.0.0.
- 3. [`Adafruit SAMD core v1.6.3+`](https://www.adafruit.com/) for SAMD ARM Cortex-M0+ and M4 boards (Nano 33 IoT, etc.). **Ready** from v1.0.0.
- 4. [`Seeeduino SAMD core 1.7.9+`](https://www.seeedstudio.com/) for SAMD21/SAMD51 boards (XIAO M0, Wio Terminal, etc.). **Ready** from v1.0.4.
+ 3. [`Adafruit SAMD core v1.6.4+`](https://www.adafruit.com/) for SAMD ARM Cortex-M0+ and M4 boards (Nano 33 IoT, etc.). **Ready** from v1.0.0.
+ 4. [`Seeeduino SAMD core 1.8.1+`](https://www.seeedstudio.com/) for SAMD21/SAMD51 boards (XIAO M0, Wio Terminal, etc.). **Ready** from v1.0.4.
 
 ---
 
@@ -67,9 +60,10 @@ below) with the `EEPROM.commit()` function.
   - `FlashStorage_SAMD-master` folder to Arduino libraries' directory such as `~/Arduino/libraries/`.
 
 ### VS Code & PlatformIO:
+
 1. Install [VS Code](https://code.visualstudio.com/)
 2. Install [PlatformIO](https://platformio.org/platformio-ide)
-3. Install **FlashStorage_SAMD** library by using [Library Manager](https://docs.platformio.org/en/latest/librarymanager/). Search for FlashStorage_SAMD in [Platform.io Author's Libraries](https://platformio.org/lib/search?query=author:%22Khoi%20Hoang%22)
+3. Install [**FlashStorage_SAMD** library](https://platformio.org/lib/show/11242/FlashStorage_SAMD) by using [Library Manager](https://platformio.org/lib/show/11242/FlashStorage_SAMD/installation). Search for **FlashStorage_SAMD** in [Platform.io Author's Libraries](https://platformio.org/lib/search?query=author:%22Khoi%20Hoang%22)
 4. Use included [platformio.ini](platformio/platformio.ini) file from examples to ensure that all dependent libraries will installed automatically. Please visit documentation for the other options and examples at [Project Configuration File](https://docs.platformio.org/page/projectconf.html)
 
 ---
@@ -98,22 +92,22 @@ These files must be copied into the directory:
 
 Whenever the above-mentioned compiler error issue is fixed with the new Arduino SAMD release, you don't need to copy the `Arduino.h` file anymore.
 
- 2. **To be able to automatically detect and display BOARD_NAME on Adafruit SAMD (Itsy-Bitsy M4, etc) boards**, you have to copy the file [Adafruit SAMD platform.txt](Packages_Patches/adafruit/hardware/samd/1.6.3) into Adafruit samd directory (~/.arduino15/packages/adafruit/hardware/samd/1.6.3). 
+ 2. ***To be able to automatically detect and display BOARD_NAME on Adafruit SAMD (Itsy-Bitsy M4, etc) boards***, you have to copy the file [Adafruit SAMD platform.txt](Packages_Patches/adafruit/hardware/samd/1.6.4) into Adafruit samd directory (~/.arduino15/packages/adafruit/hardware/samd/1.6.4). 
 
-Supposing the Adafruit SAMD core version is 1.6.3. This file must be copied into the directory:
+Supposing the Adafruit SAMD core version is 1.6.4. This file must be copied into the directory:
 
-- `~/.arduino15/packages/adafruit/hardware/samd/1.6.3/platform.txt`
+- `~/.arduino15/packages/adafruit/hardware/samd/1.6.4/platform.txt`
 
 Whenever a new version is installed, remember to copy this file into the new version directory. For example, new version is x.yy.zz
 This file must be copied into the directory:
 
 - `~/.arduino15/packages/adafruit/hardware/samd/x.yy.zz/platform.txt`
 
- 3. **To be able to automatically detect and display BOARD_NAME on Seeeduino SAMD (XIAO M0, Wio Terminal, etc) boards**, you have to copy the file [Seeeduino SAMD platform.txt](Packages_Patches/Seeeduino/hardware/samd/1.7.9) into Adafruit samd directory (~/.arduino15/packages/Seeeduino/hardware/samd/1.7.9). 
+ 3. ***To be able to automatically detect and display BOARD_NAME on Seeeduino SAMD (XIAO M0, Wio Terminal, etc) boards***, you have to copy the file [Seeeduino SAMD platform.txt](Packages_Patches/Seeeduino/hardware/samd/1.8.1) into Adafruit samd directory (~/.arduino15/packages/Seeeduino/hardware/samd/1.8.1). 
 
-Supposing the Seeeduino SAMD core version is 1.7.9. This file must be copied into the directory:
+Supposing the Seeeduino SAMD core version is 1.8.1. This file must be copied into the directory:
 
-- `~/.arduino15/packages/Seeeduino/hardware/samd/1.7.9/platform.txt`
+- `~/.arduino15/packages/Seeeduino/hardware/samd/1.8.1/platform.txt`
 
 Whenever a new version is installed, remember to copy this file into the new version directory. For example, new version is x.yy.zz
 This file must be copied into the directory:
@@ -139,7 +133,8 @@ this instruction means "create a `FlashStorage` to store an `int` variable and c
 it `age_storage`". Now you can use `age_storage` as a place to safely store an integer:
 
 ```c++
-void readAndStoreUserAge() {
+void readAndStoreUserAge() 
+{
   Serial.println("Please enter your age:");
   String age = Serial.readStringUntil('\n');
 
@@ -388,21 +383,24 @@ BBBBBBBBB BBBBBBBBBB BBBBBBBBBB BBBBBBBBBB BBBBBBBBBB BBBBBBBBBB BBBBBBBBBB
 
 ### Initial Version v1.0.0
 
-1. Add support to SAMD51 family such as Itsy-Bitsy M4, etc.
+1. Add support to SAMD51 family such as 
 
-Library is based on and modified from:
-1. [Cristian Maglie's FlashStorage](https://github.com/cmaglie/FlashStorage)
+  - Adafruit SAMD51 (M4): Metro M4, Grand Central M4, ItsyBitsy M4, Feather M4 Express, Trellis M4, Metro M4 AirLift Lite, MONSTER M4SK Express, Hallowing M4, etc.
+  - Seeeduino: Wio Terminal, Grove UI WirelessAdafruit Itsy-Bitsy M4, etc.
 
-The FlashStorage library aims to provide a convenient way to store and retrieve
-user's data using the non-volatile flash memory of microcontrollers.
+This [**FlashStorage_SAMD library**](https://github.com/khoih-prog/FlashStorage_SAMD) is based on and modified from:
 
-The flash memory, due to his properties, is generally used to store the firmware
-code, but it can also be used to store user data.
+1. [**Cristian Maglie's FlashStorage**](https://github.com/cmaglie/FlashStorage)
 
-## Supported hardware
+The FlashStorage library aims to provide a convenient way to store and retrieve user's data using the non-volatile flash memory of microcontrollers.
 
-Currently, **ATSAMD21 and ATSAMD51** are supported (and consequently every board based on 
-this cpu like the **Arduino Zero, Aduino MKR1000, Nano-33 IoT, Itsy-Bitsy M4, etc**).
+The flash memory, due to its properties, is generally used to store the firmware code, but it can also be used to store user data.
+
+---
+
+### Supported hardware
+
+Currently, **ATSAMD21 and ATSAMD51** are supported (and consequently every board based on this MPU like the **Arduino Zero, Aduino MKR1000, Nano-33 IoT, Itsy-Bitsy M4, etc**).
 
 ---
 ---
