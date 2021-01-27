@@ -1,21 +1,36 @@
-/*
+/******************************************************************************************************************************************
+  FlashStorage_SAMD21.h
+  For SAMD21/SAMD51 using Flash emulated-EEPROM
+
+  The FlashStorage_SAMD library aims to provide a convenient way to store and retrieve user's data using the non-volatile flash memory
+  of SAMD21/SAMD51. It now supports writing and reading the whole object, not just byte-and-byte.
+
+  Based on and modified from Cristian Maglie's FlashStorage (https://github.com/cmaglie/FlashStorage)
+
+  Built by Khoi Hoang https://github.com/khoih-prog/FlashStorage_SAMD
+  Licensed under LGPLv3 license
+  
+  Orginally written by Cristian Maglie
+  
   Copyright (c) 2015 Arduino LLC.  All right reserved.
-  Written by Cristian Maglie
+  Copyright (c) 2020 Khoi Hoang.
+  
+  This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License 
+  as published bythe Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+  You should have received a copy of the GNU Lesser General Public License along with this library. 
+  If not, see (https://www.gnu.org/licenses/)
+  
+  Version: 1.1.0
 
-  This library is free software; you can redistribute it and/or
-  modify it under the terms of the GNU Lesser General Public
-  License as published by the Free Software Foundation; either
-  version 2.1 of the License, or (at your option) any later version.
+  Version Modified By   Date        Comments
+  ------- -----------  ----------   -----------
+  1.0.0   K Hoang      28/03/2020  Initial coding to add support to SAMD51 besides SAMD21
+  1.1.0   K Hoang      26/01/2021  Add supports to put() and get() for writing and reading the whole object. Fix bug.
+ ******************************************************************************************************************************************/
 
-  This library is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-  See the GNU Lesser General Public License for more details.
-
-  You should have received a copy of the GNU Lesser General Public
-  License along with this library; if not, write to the Free Software
-  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
+#pragma once
 
 #ifndef FlashStorage_SAMD21_h
 #define FlashStorage_SAMD21_h

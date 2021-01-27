@@ -1,79 +1,119 @@
-/*
-  Store and retrieve structured data in Flash memory.
+/******************************************************************************************************************************************
+  StoreNameAndSurname.ino
+  For SAMD21/SAMD51 using Flash emulated-EEPROM
 
-  This example code is in the public domain.
+  The FlashStorage_SAMD library aims to provide a convenient way to store and retrieve user's data using the non-volatile flash memory
+  of SAMD21/SAMD51. It now supports writing and reading the whole object, not just byte-and-byte.
 
-  Written 30 Apr 2015 by Cristian Maglie
-*/
+  Based on and modified from Cristian Maglie's FlashStorage (https://github.com/cmaglie/FlashStorage)
 
-#include <FlashStorage_SAMD.h>
+  Built by Khoi Hoang https://github.com/khoih-prog/FlashStorage_SAMD
+  Licensed under LGPLv3 license
+  
+  Orginally written by A. Christian
+  
+  Copyright (c) 2015-2016 Arduino LLC.  All right reserved.
+  Copyright (c) 2020 Khoi Hoang.
+  
+  This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License 
+  as published bythe Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+  You should have received a copy of the GNU Lesser General Public License along with this library. 
+  If not, see (https://www.gnu.org/licenses/)
+  
+  Version: 1.1.0
+
+  Version Modified By   Date        Comments
+  ------- -----------  ----------   -----------
+  1.0.0   K Hoang      28/03/2020  Initial coding to add support to SAMD51 besides SAMD21
+  1.1.0   K Hoang      26/01/2021  Add supports to put() and get() for writing and reading the whole object. Fix bug.
+ ******************************************************************************************************************************************/
+
+// Demonstrate how to use FlashStorage_SAMD with an API that is similar to the EEPROM library to Store and retrieve structured data.
+
+#include <FlashAsEEPROM_SAMD.h>
+
+const int WRITTEN_SIGNATURE = 0xBEEFDEED;
 
 // Create a structure that is big enough to contain a name
 // and a surname. The "valid" variable is set to "true" once
 // the structure is filled with actual data for the first time.
 typedef struct
 {
-  boolean valid;
   char name[100];
   char surname[100];
 } Person;
 
-// Reserve a portion of flash memory to store a "Person" and
-// call it "my_flash_store".
-FlashStorage(my_flash_store, Person);
-
-// Note: the area of flash memory reserved lost every time
-// the sketch is uploaded on the board.
-
 void setup()
 {
-  SERIAL_PORT_MONITOR.begin(9600);
-  while (!SERIAL_PORT_MONITOR);
+  Serial.begin(115200);
+  while (!Serial);
+
+  delay(200);
+
+  Serial.print(F("\nStart StoreNameAndSurname on ")); Serial.println(BOARD_NAME);
+  Serial.println(FLASH_STORAGE_SAMD_VERSION);
+
+  Serial.print("EEPROM length: ");
+  Serial.println(EEPROM.length());
+
+  // Check signature at address 0
+  int signature;
 
   // Create a "Person" variable and call it "owner"
+  uint16_t storedAddress = 0;
   Person owner;
 
-  // Read the content of "my_flash_store" into the "owner" variable
-  owner = my_flash_store.read();
+  EEPROM.get(storedAddress, signature);
 
-  // If this is the first run the "valid" value should be "false"...
-  if (owner.valid == false)
+  // If the EEPROM is empty then no WRITTEN_SIGNATURE
+  if (signature == WRITTEN_SIGNATURE)
   {
+    EEPROM.get(storedAddress + sizeof(signature), owner);
+
+    // Say hello to the returning user!
+    Serial.print("Hi "); Serial.print(owner.name); Serial.print(" "); Serial.print(owner.surname);
+    Serial.println(", nice to see you again :-)");
+
+    Serial.println("Clearing WRITTEN_SIGNATURE for next try");
+
+    EEPROM.put(0, 0);
+    Serial.println("Done clearing signature in emulated EEPROM. You can reset now");
+  }
+  else
+  {
+    Serial.println("EEPROM is empty, writing WRITTEN_SIGNATURE and some example data:");
+
+    EEPROM.put(storedAddress, WRITTEN_SIGNATURE);
+
     // ...in this case we ask for user data.
-    SERIAL_PORT_MONITOR.setTimeout(30000);
-    SERIAL_PORT_MONITOR.println("Insert your name:");
-    String name = SERIAL_PORT_MONITOR.readStringUntil('\n');
-    SERIAL_PORT_MONITOR.println("Insert your surname:");
-    String surname = SERIAL_PORT_MONITOR.readStringUntil('\n');
+    Serial.setTimeout(30000);
+    Serial.print("Insert your name : ");
+    String name = Serial.readStringUntil('\n');
+    Serial.println(name);
+    Serial.print("Insert your surname : ");
+    String surname = Serial.readStringUntil('\n');
+    Serial.println(surname);
 
     // Fill the "owner" structure with the data entered by the user...
     name.toCharArray(owner.name, 100);
     surname.toCharArray(owner.surname, 100);
-    // set "valid" to true, so the next time we know that we
-    // have valid data inside
-    owner.valid = true;
 
-    // ...and finally save everything into "my_flash_store"
-    my_flash_store.write(owner);
+    // ...and finally save everything into emulated-EEPROM
+    EEPROM.put(storedAddress + sizeof(signature), owner);
+
+    if (!EEPROM.getCommitASAP())
+    {
+      Serial.println("CommitASAP not set. Need commit()");
+      EEPROM.commit();
+    }
 
     // Print a confirmation of the data inserted.
-    SERIAL_PORT_MONITOR.println();
-    SERIAL_PORT_MONITOR.print("Your name: ");
-    SERIAL_PORT_MONITOR.println(owner.name);
-    SERIAL_PORT_MONITOR.print("and your surname: ");
-    SERIAL_PORT_MONITOR.println(owner.surname);
-    SERIAL_PORT_MONITOR.println("have been saved. Thank you!");
-
-  }
-  else
-  {
-    // Say hello to the returning user!
-    SERIAL_PORT_MONITOR.println();
-    SERIAL_PORT_MONITOR.print("Hi ");
-    SERIAL_PORT_MONITOR.print(owner.name);
-    SERIAL_PORT_MONITOR.print(" ");
-    SERIAL_PORT_MONITOR.print(owner.surname);
-    SERIAL_PORT_MONITOR.println(", nice to see you again :-)");
+    Serial.print("<< Your name: "); Serial.print(owner.name);
+    Serial.print(". Your surname: "); Serial.print(owner.surname);
+    Serial.println(" >> have been saved. Thank you!");
+    Serial.println("You can reset to check emulated-EEPROM data retention.");
   }
 }
 

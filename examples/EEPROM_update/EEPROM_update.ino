@@ -1,5 +1,5 @@
 /******************************************************************************************************************************************
-  FlashStoreAndRetrieve.ino
+  EEPROM_update.ino
   For SAMD21/SAMD51 using Flash emulated-EEPROM
 
   The FlashStorage_SAMD library aims to provide a convenient way to store and retrieve user's data using the non-volatile flash memory
@@ -29,11 +29,23 @@
   1.0.0   K Hoang      28/03/2020  Initial coding to add support to SAMD51 besides SAMD21
   1.1.0   K Hoang      26/01/2021  Add supports to put() and get() for writing and reading the whole object. Fix bug.
  ******************************************************************************************************************************************/
+/***
+   EEPROM Update method
+
+   Stores values read from analog input 0 into the EEPROM.
+   These values will stay in the EEPROM when the board is
+   turned off and may be retrieved later by another sketch.
+
+   If a value has not changed in the EEPROM, it is not overwritten
+   which would reduce the life span of the EEPROM unnecessarily.
+
+   Released using MIT licence.
+ ***/
 
 #include <FlashAsEEPROM_SAMD.h>
 
-// Note: the area of flash memory reserved for the variable is
-// lost every time the sketch is uploaded on the board.
+/** the current address in the EEPROM (i.e. which byte we're going to write to next) **/
+int address = 0;
 
 void setup()
 {
@@ -42,34 +54,33 @@ void setup()
 
   delay(200);
 
-  Serial.print(F("\nStart FlashStoreAndRetrieve on ")); Serial.println(BOARD_NAME);
+  Serial.print(F("\nStart EEPROM_read on ")); Serial.println(BOARD_NAME);
   Serial.println(FLASH_STORAGE_SAMD_VERSION);
 
   Serial.print("EEPROM length: ");
   Serial.println(EEPROM.length());
-
-  uint16_t address = 0;
-  int number;
-
-  // Read the content of emulated-EEPROM
-  EEPROM.get(address, number);
-
-  // Print the current number on the serial monitor
-  Serial.print("Number = 0x"); Serial.println(number, HEX);
-
-  // Save into emulated-EEPROM the number increased by 1 for the next run of the sketch
-  EEPROM.put(address, (int) (number + 1));
-
-  if (!EEPROM.getCommitASAP())
-  {
-    Serial.println("CommitASAP not set. Need commit()");
-    EEPROM.commit();
-  }
-
-  Serial.println("Done writing to emulated EEPROM. You can reset now");
 }
 
 void loop()
 {
-  // Do nothing...
+  unsigned long startMillis = millis();
+  
+  for (int i = 0 ; i < EEPROM.length() ; i++) 
+  {
+    /***
+      The function EEPROM.update(address, val) is equivalent to the following:
+  
+      if( EEPROM.read(address) != val )
+      {
+        EEPROM.write(address, val);
+      }
+    ***/
+    EEPROM.update(i, (uint8_t) analogRead(0));
+  }
+  
+  EEPROM.commit();
+
+  Serial.print("Done updating emulated EEPROM. Time spent (ms) = "); Serial.println(millis() - startMillis);
+
+  delay(60000);
 }

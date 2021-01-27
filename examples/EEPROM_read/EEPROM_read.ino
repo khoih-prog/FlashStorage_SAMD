@@ -1,5 +1,5 @@
 /******************************************************************************************************************************************
-  FlashStoreAndRetrieve.ino
+  EEPROM_read.ino
   For SAMD21/SAMD51 using Flash emulated-EEPROM
 
   The FlashStorage_SAMD library aims to provide a convenient way to store and retrieve user's data using the non-volatile flash memory
@@ -29,11 +29,18 @@
   1.0.0   K Hoang      28/03/2020  Initial coding to add support to SAMD51 besides SAMD21
   1.1.0   K Hoang      26/01/2021  Add supports to put() and get() for writing and reading the whole object. Fix bug.
  ******************************************************************************************************************************************/
+/*
+   EEPROM Read
+
+   Reads the value of each byte of the EEPROM and prints it to the computer.
+   This example code is in the public domain.
+*/
 
 #include <FlashAsEEPROM_SAMD.h>
 
-// Note: the area of flash memory reserved for the variable is
-// lost every time the sketch is uploaded on the board.
+// start reading from the first byte (address 0) of the EEPROM
+int address = 0;
+byte value;
 
 void setup()
 {
@@ -42,34 +49,34 @@ void setup()
 
   delay(200);
 
-  Serial.print(F("\nStart FlashStoreAndRetrieve on ")); Serial.println(BOARD_NAME);
+  Serial.print(F("\nStart EEPROM_read on ")); Serial.println(BOARD_NAME);
   Serial.println(FLASH_STORAGE_SAMD_VERSION);
 
   Serial.print("EEPROM length: ");
   Serial.println(EEPROM.length());
-
-  uint16_t address = 0;
-  int number;
-
-  // Read the content of emulated-EEPROM
-  EEPROM.get(address, number);
-
-  // Print the current number on the serial monitor
-  Serial.print("Number = 0x"); Serial.println(number, HEX);
-
-  // Save into emulated-EEPROM the number increased by 1 for the next run of the sketch
-  EEPROM.put(address, (int) (number + 1));
-
-  if (!EEPROM.getCommitASAP())
-  {
-    Serial.println("CommitASAP not set. Need commit()");
-    EEPROM.commit();
-  }
-
-  Serial.println("Done writing to emulated EEPROM. You can reset now");
 }
 
-void loop()
+void loop() 
 {
-  // Do nothing...
+  // read a byte from the current address of the EEPROM
+  value = EEPROM.read(address);
+
+  Serial.print(address);
+  Serial.print("\t");
+  Serial.print(value, DEC);
+  Serial.println();
+ 
+  if (++address == EEPROM.length()) 
+  {
+    address = 0;
+  }
+
+  /***
+    As the EEPROM sizes are powers of two, wrapping (preventing overflow) of an
+    EEPROM address is also doable by a bitwise and of the length - 1.
+
+    ++address &= EEPROM.length() - 1;
+  ***/
+
+  delay(500);
 }

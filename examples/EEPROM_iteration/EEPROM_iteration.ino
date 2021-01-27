@@ -1,5 +1,5 @@
 /******************************************************************************************************************************************
-  FlashStoreAndRetrieve.ino
+  EEPROM_iteration.ino
   For SAMD21/SAMD51 using Flash emulated-EEPROM
 
   The FlashStorage_SAMD library aims to provide a convenient way to store and retrieve user's data using the non-volatile flash memory
@@ -29,11 +29,18 @@
   1.0.0   K Hoang      28/03/2020  Initial coding to add support to SAMD51 besides SAMD21
   1.1.0   K Hoang      26/01/2021  Add supports to put() and get() for writing and reading the whole object. Fix bug.
  ******************************************************************************************************************************************/
+/***
+    eeprom_iteration example.
+
+    A set of example snippets highlighting the simplest methods for traversing the EEPROM.
+
+    Running this sketch is not necessary, this is simply highlighting certain programming methods.
+
+    Written by Christopher Andrews 2015
+    Released under MIT licence.
+***/
 
 #include <FlashAsEEPROM_SAMD.h>
-
-// Note: the area of flash memory reserved for the variable is
-// lost every time the sketch is uploaded on the board.
 
 void setup()
 {
@@ -42,34 +49,60 @@ void setup()
 
   delay(200);
 
-  Serial.print(F("\nStart FlashStoreAndRetrieve on ")); Serial.println(BOARD_NAME);
+  Serial.print(F("\nStart EEPROM_iteration on ")); Serial.println(BOARD_NAME);
   Serial.println(FLASH_STORAGE_SAMD_VERSION);
 
   Serial.print("EEPROM length: ");
   Serial.println(EEPROM.length());
 
-  uint16_t address = 0;
-  int number;
+  /***
+    Iterate the EEPROM using a for loop.
+  ***/
 
-  // Read the content of emulated-EEPROM
-  EEPROM.get(address, number);
-
-  // Print the current number on the serial monitor
-  Serial.print("Number = 0x"); Serial.println(number, HEX);
-
-  // Save into emulated-EEPROM the number increased by 1 for the next run of the sketch
-  EEPROM.put(address, (int) (number + 1));
-
-  if (!EEPROM.getCommitASAP())
+  for (int index = 0 ; index < EEPROM.length() ; index++) 
   {
-    Serial.println("CommitASAP not set. Need commit()");
-    EEPROM.commit();
+    // Add one to each cell in the EEPROM
+    EEPROM.write(index, EEPROM.read(index) + 1);
   }
 
-  Serial.println("Done writing to emulated EEPROM. You can reset now");
-}
+  EEPROM.commit();
 
-void loop()
-{
-  // Do nothing...
-}
+  Serial.println("Done for loop");
+
+  /***
+    Iterate the EEPROM using a while loop.
+  ***/
+
+  int index = 0;
+
+  while (index < EEPROM.length()) 
+  {
+    // Add one to each cell in the EEPROM
+    EEPROM.write(index, EEPROM.read(index) + 1);
+    index++;
+  }
+
+  EEPROM.commit();
+
+  Serial.println("Done while loop");
+
+  /***
+    Iterate the EEPROM using a do-while loop.
+  ***/
+
+  int idx = 0;  //Used 'idx' to avoid name conflict with 'index' above.
+
+  do 
+  {
+    // Add one to each cell in the EEPROM
+    EEPROM.write(index, EEPROM.read(index) + 1);
+    idx++;
+  } while (idx < EEPROM.length());
+
+  EEPROM.commit();
+
+  Serial.println("Done do-while loop");
+  
+} //End of setup function.
+
+void loop() {}

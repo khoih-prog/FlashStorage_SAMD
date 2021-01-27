@@ -1,5 +1,5 @@
 /******************************************************************************************************************************************
-  FlashStoreAndRetrieve.ino
+  EEPROM_put.ino
   For SAMD21/SAMD51 using Flash emulated-EEPROM
 
   The FlashStorage_SAMD library aims to provide a convenient way to store and retrieve user's data using the non-volatile flash memory
@@ -29,11 +29,39 @@
   1.0.0   K Hoang      28/03/2020  Initial coding to add support to SAMD51 besides SAMD21
   1.1.0   K Hoang      26/01/2021  Add supports to put() and get() for writing and reading the whole object. Fix bug.
  ******************************************************************************************************************************************/
+/***
+    eeprom_put example.
+
+    This shows how to use the EEPROM.put() method. Also, this sketch will pre-set the EEPROM data
+    for the example sketch eeprom_get.
+
+    Note, unlike the single byte version EEPROM.write(), the put method will use update semantics. As in a byte
+    will only be written to the EEPROM if the data is actually different.
+
+    Written by Christopher Andrews 2015
+    Released under MIT licence.
+***/
 
 #include <FlashAsEEPROM_SAMD.h>
 
-// Note: the area of flash memory reserved for the variable is
-// lost every time the sketch is uploaded on the board.
+const int WRITTEN_SIGNATURE = 0xBEEFDEED;
+const int START_ADDRESS     = 0;
+
+struct MyObject
+{
+  float field1;
+  byte field2;
+  char name[10];
+};
+
+void printMyObject(MyObject &customVar)
+{
+  Serial.println("===============");
+  Serial.print("Field1: "); Serial.println(customVar.field1, 5);
+  Serial.print("Field2: "); Serial.println(customVar.field2);
+  Serial.print("Name: "); Serial.println(customVar.name);
+  Serial.println("===============");
+}
 
 void setup()
 {
@@ -42,23 +70,34 @@ void setup()
 
   delay(200);
 
-  Serial.print(F("\nStart FlashStoreAndRetrieve on ")); Serial.println(BOARD_NAME);
+  Serial.print(F("\nStart EEPROM_put on ")); Serial.println(BOARD_NAME);
   Serial.println(FLASH_STORAGE_SAMD_VERSION);
 
   Serial.print("EEPROM length: ");
   Serial.println(EEPROM.length());
 
-  uint16_t address = 0;
-  int number;
+  float f = 123.456f;  //Variable to store in EEPROM.
+  int eeAddress = START_ADDRESS + sizeof(WRITTEN_SIGNATURE);   //Location we want the data to be put.
 
-  // Read the content of emulated-EEPROM
-  EEPROM.get(address, number);
+  //One simple call, with the address first and the object second.
+  EEPROM.put(eeAddress, f);
 
-  // Print the current number on the serial monitor
-  Serial.print("Number = 0x"); Serial.println(number, HEX);
+  Serial.print("Float written to EEPROM: ");
+  Serial.println(f, 3);
 
-  // Save into emulated-EEPROM the number increased by 1 for the next run of the sketch
-  EEPROM.put(address, (int) (number + 1));
+  /** Put is designed for use with custom structures also. **/
+
+  //Data to store.
+  MyObject customVar =
+  {
+    3.14159f,
+    65,
+    "Working!"
+  };
+
+  eeAddress += sizeof(float); //Move address to the next byte after float 'f'.
+
+  EEPROM.put(eeAddress, customVar);
 
   if (!EEPROM.getCommitASAP())
   {
@@ -66,10 +105,12 @@ void setup()
     EEPROM.commit();
   }
 
-  Serial.println("Done writing to emulated EEPROM. You can reset now");
+  Serial.println("Done writing custom object to EEPROM: ");
+  printMyObject(customVar);
+  Serial.println("Use the EEPROM_get sketch to see how you can retrieve the data");
 }
 
 void loop()
 {
-  // Do nothing...
+  /* Empty loop */
 }

@@ -1,5 +1,5 @@
 /******************************************************************************************************************************************
-  FlashStoreAndRetrieve.ino
+  EEPROM_Clear.ino
   For SAMD21/SAMD51 using Flash emulated-EEPROM
 
   The FlashStorage_SAMD library aims to provide a convenient way to store and retrieve user's data using the non-volatile flash memory
@@ -29,47 +29,44 @@
   1.0.0   K Hoang      28/03/2020  Initial coding to add support to SAMD51 besides SAMD21
   1.1.0   K Hoang      26/01/2021  Add supports to put() and get() for writing and reading the whole object. Fix bug.
  ******************************************************************************************************************************************/
+//#define EEPROM_EMULATION_SIZE     (4 * 1024)
 
 #include <FlashAsEEPROM_SAMD.h>
 
-// Note: the area of flash memory reserved for the variable is
-// lost every time the sketch is uploaded on the board.
-
-void setup()
+void setup() 
 {
   Serial.begin(115200);
   while (!Serial);
 
   delay(200);
 
-  Serial.print(F("\nStart FlashStoreAndRetrieve on ")); Serial.println(BOARD_NAME);
+  Serial.print(F("\nStart EEPROM_Clear on ")); Serial.println(BOARD_NAME);
   Serial.println(FLASH_STORAGE_SAMD_VERSION);
+  
+  // initialize the LED pin as an output.
+  pinMode(LED_BUILTIN, OUTPUT);
+  digitalWrite(LED_BUILTIN, LOW);
 
-  Serial.print("EEPROM length: ");
-  Serial.println(EEPROM.length());
+  Serial.print("Emulated EEPROM length (bytes) = "); Serial.println(EEPROM.length());
 
-  uint16_t address = 0;
-  int number;
-
-  // Read the content of emulated-EEPROM
-  EEPROM.get(address, number);
-
-  // Print the current number on the serial monitor
-  Serial.print("Number = 0x"); Serial.println(number, HEX);
-
-  // Save into emulated-EEPROM the number increased by 1 for the next run of the sketch
-  EEPROM.put(address, (int) (number + 1));
-
-  if (!EEPROM.getCommitASAP())
+  unsigned long startMillis = millis();
+  
+  for (int i = 0 ; i < EEPROM.length() ; i++) 
   {
-    Serial.println("CommitASAP not set. Need commit()");
-    EEPROM.commit();
+    EEPROM.write(i, 0);
   }
 
-  Serial.println("Done writing to emulated EEPROM. You can reset now");
+  EEPROM.commit();
+
+  // The time spent can be very short (5-25ms) if the EEPROM is not dirty.
+  // For Seeed XIAO, the time is around 22 / 42 ms for 2048 / 4096 bytes of emulated-EEPROM
+  Serial.print("Done clearing emulated EEPROM. Time spent (ms) = "); Serial.println(millis() - startMillis);
+
+  // turn the LED on when we're done
+  digitalWrite(LED_BUILTIN, HIGH);
 }
 
-void loop()
+void loop() 
 {
-  // Do nothing...
+  /** Empty loop. **/
 }
