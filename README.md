@@ -58,7 +58,7 @@
   * [1. W5500_Blynk on Adafruit SAMD51 ITSYBITSY_M4 using W5500 Ethernet shield](#1-w5500_blynk-on-adafruit-samd51-itsybitsy_m4-using-w5500-ethernet-shield)
   * [2. StoreNameAndSurname on SAMD21 SEEED_XIAO_M0](#2-storenameandsurname-on-samd21-seeed_xiao_m0)
     * [2.1. No data, input then save](#21-no-data--input-then-save)
-    * [2.2. Data retention after reset](#21-data-retention-after-reset)
+    * [2.2. Data retention after reset](#22-data-retention-after-reset)
   * [3. EEPROM_Clear on SAMD21 SEEED_XIAO_M0](#3-eeprom_clear-on-samd21-seeed_xiao_m0)
   * [4. EEPROM_get on SAMD21 SEEED_XIAO_M0](#4-eeprom_get-on-samd21-seeed_xiao_m0)
 * [FAQ](#faq)
