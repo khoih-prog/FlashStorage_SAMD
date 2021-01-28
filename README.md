@@ -1,6 +1,5 @@
 # FlashStorage_SAMD library for Arduino
 
-[![arduino-library-badge](https://www.ardu-badge.com/badge/FlashStorage_SAMD.svg?)](https://www.ardu-badge.com/FlashStorage_SAMD)
 [![GitHub release](https://img.shields.io/github/release/khoih-prog/FlashStorage_SAMD.svg)](https://github.com/khoih-prog/FlashStorage_SAMD/releases)
 [![GitHub](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/khoih-prog/FlashStorage_SAMD/blob/master/LICENSE)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](#Contributing)
@@ -86,8 +85,6 @@ The FlashStorage_SAMD library, based on and modified from [Cristian Maglie's Fla
 
 The flash memory, generally used to store the firmware code, can also be used to store / retrieve more user's data and faster than from EEPROM. Thanks to the **buffered data writing and reading**, the flash access time is greatly reduced to **increase the life of the flash**.
 
-This [**FlashStorage_SAMD library**](https://github.com/khoih-prog/FlashStorage_SAMD) is based on and modified from:
-
 
 ### Currently supported Boards
 
@@ -132,7 +129,6 @@ This [**FlashStorage_SAMD library**](https://github.com/khoih-prog/FlashStorage_
 ### Use Arduino Library Manager
 
 The best and easiest way is to use `Arduino Library Manager`. Search for [**FlashStorage_SAMD**](https://github.com/khoih-prog/FlashStorage_SAMD), then select / install the latest version.
-You can also use this link [![arduino-library-badge](https://www.ardu-badge.com/badge/FlashStorage_SAMD.svg?)](https://www.ardu-badge.com/FlashStorage_SAMD) for more detailed instructions.
 
 ### Manual Install
 
