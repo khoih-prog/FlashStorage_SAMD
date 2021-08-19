@@ -105,7 +105,7 @@ The flash memory, generally used to store the firmware code, can also be used to
 
 1. Optimize code.
 2. Add debug option.
-3. Add support to Industruino DG21 boards using [IndustruinoSAMD core]((https://github.com/Industruino/IndustruinoSAMD))
+3. Add support to Industruino DG21 boards using [IndustruinoSAMD core](https://github.com/Industruino/IndustruinoSAMD)
 4. Add support to Industruino 420MAKER boards using [IndustruinoSAML core](https://github.com/Industruino/IndustruinoSAMx)
 
 ### Releases v1.1.0
@@ -683,7 +683,7 @@ Sometimes, the library will only work if you update the board core to the latest
 
 1. Optimize code.
 2. Add debug option.
-3. Add support to Industruino DG21 boards using [IndustruinoSAMD core]((https://github.com/Industruino/IndustruinoSAMD))
+3. Add support to Industruino DG21 boards using [IndustruinoSAMD core](https://github.com/Industruino/IndustruinoSAMD)
 4. Add support to Industruino 420MAKER boards using [IndustruinoSAML core](https://github.com/Industruino/IndustruinoSAMx)
 
 ### Releases v1.1.0
