@@ -46,14 +46,14 @@
   #define BOARD_NAME      "SAML21 INDUSTRUINO_420MAKER"
 #endif
 
+#if !defined(Serial)
+  #define Serial          SERIAL_PORT_MONITOR
+#endif
+
 /////////////////////////////////////////////////////
 
 #ifndef FLASH_DEBUG
   #define FLASH_DEBUG               0
-#endif
-
-#if !defined Serial
-  #define Serial SerialUSB
 #endif
 
 #if !defined(FLASH_DEBUG_OUTPUT)

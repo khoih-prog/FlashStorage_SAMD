@@ -96,6 +96,9 @@ The flash memory, generally used to store the firmware code, can also be used to
   - **Seeeduino SAMD21/SAMD51 boards (SEEED_WIO_TERMINAL, SEEED_FEMTO_M0, SEEED_XIAO_M0, Wio_Lite_MG126, WIO_GPS_BOARD, SEEEDUINO_ZERO, SEEEDUINO_LORAWAN, SEEED_GROVE_UI_WIRELESS, etc.)** 
   - **Industruino DG21**
   - **Industruino 420MAKER**
+  - **Sparkfun SAMD21 boards** such as **SparkFun_RedBoard_Turbo, SparkFun_Qwiic_Micro, etc.**
+  - **Sparkfun SAMD51 boards** such as **SparkFun_SAMD51_Thing_Plus, SparkFun_SAMD51_MicroMod, etc.**
+  
 ---
 ---
 
@@ -105,8 +108,9 @@ The flash memory, generally used to store the firmware code, can also be used to
 
 1. Optimize code.
 2. Add debug option.
-3. Add support to Industruino DG21 boards using [IndustruinoSAMD core](https://github.com/Industruino/IndustruinoSAMD)
-4. Add support to Industruino 420MAKER boards using [IndustruinoSAML core](https://github.com/Industruino/IndustruinoSAMx)
+3. Add support to Industruino DG21 boards using [`IndustruinoSAMD core`](https://github.com/Industruino/IndustruinoSAMD)
+4. Add support to Industruino 420MAKER boards using [`IndustruinoSAML core`](https://github.com/Industruino/IndustruinoSAMx)
+5. Sparkfun SAMD21 and SAMD51 boards using [`Sparkfun SAMD core`](https://github.com/sparkfun/Arduino_Boards)
 
 ### Releases v1.1.0
 
@@ -133,7 +137,8 @@ The flash memory, generally used to store the firmware code, can also be used to
  4. [`Seeeduino SAMD core 1.8.1+`](https://github.com/Seeed-Studio/ArduinoCore-samd) for SAMD21/SAMD51 boards (XIAO M0, Wio Terminal, etc.). [![Latest release](https://img.shields.io/github/release/Seeed-Studio/ArduinoCore-samd.svg)](https://github.com/Seeed-Studio/ArduinoCore-samd/releases/latest/)
  5. [`IndustruinoSAMD core 1.0.1+`](https://github.com/Industruino/IndustruinoSAMD) for SAMD21 boards (Industruino DG21, etc.).
  6. [`IndustruinoSAML core 1.0.0+`](https://github.com/Industruino/IndustruinoSAMx) for SAML21 boards (Industruino 420MAKER, etc.).
-
+ 7. [`Sparkfun SAMD core 1.8.1+`](https://github.com/sparkfun/Arduino_Boards) for SAMD21/SAMD51 boards (SparkFun_RedBoard_Turbo, SparkFun_SAMD51_Thing_Plus, etc.).
+ 
 ---
 
 ## Installation
@@ -683,8 +688,9 @@ Sometimes, the library will only work if you update the board core to the latest
 
 1. Optimize code.
 2. Add debug option.
-3. Add support to Industruino DG21 boards using [IndustruinoSAMD core](https://github.com/Industruino/IndustruinoSAMD)
-4. Add support to Industruino 420MAKER boards using [IndustruinoSAML core](https://github.com/Industruino/IndustruinoSAMx)
+3. Add support to Industruino DG21 boards using [`IndustruinoSAMD core`](https://github.com/Industruino/IndustruinoSAMD)
+4. Add support to Industruino 420MAKER boards using [`IndustruinoSAML core`](https://github.com/Industruino/IndustruinoSAMx)
+5. Sparkfun SAMD21 and SAMD51 boards using [`Sparkfun SAMD core`](https://github.com/sparkfun/Arduino_Boards)
 
 ### Releases v1.1.0
 
@@ -712,6 +718,8 @@ Sometimes, the library will only work if you update the board core to the latest
   - **Seeeduino SAMD21/SAMD51 boards (SEEED_WIO_TERMINAL, SEEED_FEMTO_M0, SEEED_XIAO_M0, Wio_Lite_MG126, WIO_GPS_BOARD, SEEEDUINO_ZERO, SEEEDUINO_LORAWAN, SEEED_GROVE_UI_WIRELESS, etc.)** 
   - **Industruino DG21**
   - **Industruino 420MAKER**
+  - **Sparkfun SAMD21 boards** such as **SparkFun_RedBoard_Turbo, SparkFun_Qwiic_Micro, etc.**
+  - **Sparkfun SAMD51 boards** such as **SparkFun_SAMD51_Thing_Plus, SparkFun_SAMD51_MicroMod, etc.**
 
 ---
 ---
@@ -736,6 +744,7 @@ Submit issues to: [FlashStorage_SAMD issues](https://github.com/khoih-prog/Flash
 3. Similar features for STM32F/L/H/G/WB/MP1.
 4. Add Table of Contents
 5. Add support to Industruino SAMD21 DG21 and Industruino SAML21 420MAKER boards
+6. Add support to **Sparkfun SAMD21 and SAMD51 boards**
 
 ---
 ---
