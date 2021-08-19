@@ -110,7 +110,7 @@ The flash memory, generally used to store the firmware code, can also be used to
 2. Add debug option.
 3. Add support to Industruino DG21 boards using [`IndustruinoSAMD core`](https://github.com/Industruino/IndustruinoSAMD)
 4. Add support to Industruino 420MAKER boards using [`IndustruinoSAML core`](https://github.com/Industruino/IndustruinoSAMx)
-5. Sparkfun SAMD21 and SAMD51 boards using [`Sparkfun SAMD core`](https://github.com/sparkfun/Arduino_Boards)
+5. Add support to Sparkfun SAMD21 and SAMD51 boards using [`Sparkfun SAMD core`](https://github.com/sparkfun/Arduino_Boards)
 
 ### Releases v1.1.0
 
@@ -690,7 +690,7 @@ Sometimes, the library will only work if you update the board core to the latest
 2. Add debug option.
 3. Add support to Industruino DG21 boards using [`IndustruinoSAMD core`](https://github.com/Industruino/IndustruinoSAMD)
 4. Add support to Industruino 420MAKER boards using [`IndustruinoSAML core`](https://github.com/Industruino/IndustruinoSAMx)
-5. Sparkfun SAMD21 and SAMD51 boards using [`Sparkfun SAMD core`](https://github.com/sparkfun/Arduino_Boards)
+5. Add support to Sparkfun SAMD21 and SAMD51 boards using [`Sparkfun SAMD core`](https://github.com/sparkfun/Arduino_Boards)
 
 ### Releases v1.1.0
 
