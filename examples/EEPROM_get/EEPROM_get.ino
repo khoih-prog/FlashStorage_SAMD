@@ -9,25 +9,26 @@
 
   Built by Khoi Hoang https://github.com/khoih-prog/FlashStorage_SAMD
   Licensed under LGPLv3 license
-  
+
   Orginally written by A. Christian
-  
+
   Copyright (c) 2015-2016 Arduino LLC.  All right reserved.
   Copyright (c) 2020 Khoi Hoang.
-  
-  This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License 
+
+  This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License
   as published bythe Free Software Foundation, either version 3 of the License, or (at your option) any later version.
   This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
-  You should have received a copy of the GNU Lesser General Public License along with this library. 
+  You should have received a copy of the GNU Lesser General Public License along with this library.
   If not, see (https://www.gnu.org/licenses/)
-  
-  Version: 1.1.0
+
+  Version: 1.2.0
 
   Version Modified By   Date        Comments
   ------- -----------  ----------   -----------
   1.0.0   K Hoang      28/03/2020  Initial coding to add support to SAMD51 besides SAMD21
   1.1.0   K Hoang      26/01/2021  Add supports to put() and get() for writing and reading the whole object. Fix bug.
+  1.2.0   K Hoang      18/08/2021  Optimize code. Add debug option
  ******************************************************************************************************************************************/
 /***
     eeprom_get example.
@@ -44,7 +45,12 @@
     Released under MIT licence.
 ***/
 
-#include <FlashAsEEPROM_SAMD.h>
+//#define EEPROM_EMULATION_SIZE     (4 * 1024)
+
+// Use 0-2. Larger for more debugging messages
+#define FLASH_DEBUG       0
+
+#include <FlashStorage_SAMD.h>
 
 const int WRITTEN_SIGNATURE = 0xBEEFDEED;
 const int START_ADDRESS     = 0;
@@ -91,7 +97,7 @@ void setup()
 
   // Check signature at address 0
   int signature;
-  
+
   float f;
   int eeAddress;
 
@@ -106,15 +112,15 @@ void setup()
 
     f = 123.456f;  //Variable to store in EEPROM.
     eeAddress = START_ADDRESS + sizeof(WRITTEN_SIGNATURE);   //Location we want the data to be put.
-  
+
     //One simple call, with the address first and the object second.
     EEPROM.put(eeAddress, f);
-  
+
     Serial.print("Float written to EEPROM: ");
     Serial.println(f, 3);
-  
+
     /** Put is designed for use with custom structures also. **/
-  
+
     //Data to store.
     MyObject customVar =
     {
@@ -122,9 +128,9 @@ void setup()
       65,
       "Working!"
     };
-  
+
     eeAddress += sizeof(float); //Move address to the next byte after float 'f'.
-  
+
     EEPROM.put(eeAddress, customVar);
 
     if (!EEPROM.getCommitASAP())
@@ -132,7 +138,7 @@ void setup()
       Serial.println("CommitASAP not set. Need commit()");
       EEPROM.commit();
     }
-    
+
     Serial.println("Done writing custom object to EEPROM: ");
     printMyObject(customVar);
     Serial.println("Reset to see how you can retrieve the values by using EEPROM_get!");
@@ -140,16 +146,16 @@ void setup()
   else
   {
     Serial.println("EEPROM has valid data with WRITTEN_SIGNATURE. Now read some example data");
-    
+
     f = 0.00f;   //Variable to store data read from EEPROM.
     eeAddress = START_ADDRESS + sizeof(WRITTEN_SIGNATURE); //EEPROM address to start reading from
-  
+
     Serial.print("Read float from EEPROM: ");
-  
+
     //Get the float data from the EEPROM at position 'eeAddress'
     EEPROM.get(eeAddress, f);
     Serial.println(f, 3);    //This may print 'ovf, nan' if the data inside the EEPROM is not a valid float.
-   
+
     secondTest(); //Run the next test.
   }
 }

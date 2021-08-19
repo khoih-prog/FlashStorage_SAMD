@@ -22,12 +22,13 @@
   You should have received a copy of the GNU Lesser General Public License along with this library. 
   If not, see (https://www.gnu.org/licenses/)
   
-  Version: 1.1.0
+  Version: 1.2.0
 
   Version Modified By   Date        Comments
   ------- -----------  ----------   -----------
   1.0.0   K Hoang      28/03/2020  Initial coding to add support to SAMD51 besides SAMD21
   1.1.0   K Hoang      26/01/2021  Add supports to put() and get() for writing and reading the whole object. Fix bug.
+  1.2.0   K Hoang      18/08/2021  Optimize code. Add debug option
  ******************************************************************************************************************************************/
 /***
   Written by Christopher Andrews.
@@ -38,7 +39,12 @@
   The purpose of this example is to highlight how the EEPROM object can be used just like an array.
 ***/
 
-#include <FlashAsEEPROM_SAMD.h>
+//#define EEPROM_EMULATION_SIZE     (4 * 1024)
+
+// Use 0-2. Larger for more debugging messages
+#define FLASH_DEBUG       0
+
+#include <FlashStorage_SAMD.h>
 
 unsigned long eeprom_crc() 
 {

@@ -22,12 +22,13 @@
   You should have received a copy of the GNU Lesser General Public License along with this library. 
   If not, see (https://www.gnu.org/licenses/)
   
-  Version: 1.1.0
+  Version: 1.2.0
 
   Version Modified By   Date        Comments
   ------- -----------  ----------   -----------
   1.0.0   K Hoang      28/03/2020  Initial coding to add support to SAMD51 besides SAMD21
   1.1.0   K Hoang      26/01/2021  Add supports to put() and get() for writing and reading the whole object. Fix bug.
+  1.2.0   K Hoang      18/08/2021  Optimize code. Add debug option
  ******************************************************************************************************************************************/
 
 #pragma once
@@ -35,9 +36,60 @@
 #ifndef FlashStorage_SAMD_h
 #define FlashStorage_SAMD_h
 
-#define FLASH_STORAGE_SAMD_VERSION     "FlashStorage_SAMD v1.1.0"
+#define FLASH_STORAGE_SAMD_VERSION     "FlashStorage_SAMD v1.2.0"
 
 #include <Arduino.h>
+
+#if defined(SAMD_INDUSTRUINO_D21G)
+  #define BOARD_NAME      "SAMD21 INDUSTRUINO_D21G"
+#elif defined(ARDUINO_SAML_INDUSTRUINO_420MAKER)
+  #define BOARD_NAME      "SAML21 INDUSTRUINO_420MAKER"
+#endif
+
+/////////////////////////////////////////////////////
+
+#ifndef FLASH_DEBUG
+  #define FLASH_DEBUG               0
+#endif
+
+#if !defined Serial
+  #define Serial SerialUSB
+#endif
+
+#if !defined(FLASH_DEBUG_OUTPUT)
+  #define FLASH_DEBUG_OUTPUT    Serial
+#endif
+
+const char FLASH_MARK[]  = "[FLASH] ";
+const char FLASH_SP[]    = " ";
+
+#define FLASH_PRINT          FLASH_DEBUG_OUTPUT.print
+#define FLASH_PRINTLN        FLASH_DEBUG_OUTPUT.println
+#define FLASH_FLUSH          FLASH_DEBUG_OUTPUT.flush
+
+#define FLASH_PRINT_MARK     FLASH_PRINT(FLASH_MARK)
+#define FLASH_PRINT_SP       FLASH_PRINT(FLASH_SP)
+
+/////////////////////////////////////////////////////
+
+#define FLASH_LOGERROR(x)         if(FLASH_DEBUG>0) { FLASH_PRINT("[FLASH] "); FLASH_PRINTLN(x); }
+#define FLASH_LOGERROR0(x)        if(FLASH_DEBUG>0) { FLASH_PRINT(x); }
+#define FLASH_HEXLOGERROR0(x)     if(FLASH_DEBUG>0) { FLASH_PRINTLN(x, HEX); }
+#define FLASH_LOGERROR1(x,y)      if(FLASH_DEBUG>0) { FLASH_PRINT("[FLASH] "); FLASH_PRINT(x); FLASH_PRINT_SP; FLASH_PRINTLN(y); }
+#define FLASH_LOGERROR2(x,y,z)    if(FLASH_DEBUG>0) { FLASH_PRINT("[FLASH] "); FLASH_PRINT(x); FLASH_PRINT_SP; FLASH_PRINT(y); FLASH_PRINT_SP; FLASH_PRINTLN(z); }
+#define FLASH_LOGERROR3(x,y,z,w)  if(FLASH_DEBUG>0) { FLASH_PRINT("[FLASH] "); FLASH_PRINT(x); FLASH_PRINT_SP; FLASH_PRINT(y); FLASH_PRINT_SP; FLASH_PRINT(z); FLASH_PRINT_SP; FLASH_PRINTLN(w); }
+
+/////////////////////////////////////////////////////
+
+#define FLASH_LOGDEBUG(x)         if(FLASH_DEBUG>1) { FLASH_PRINT("[FLASH] "); FLASH_PRINTLN(x); }
+#define FLASH_LOGDEBUG0(x)        if(FLASH_DEBUG>1) { FLASH_PRINT(x); }
+#define FLASH_HEXLOGDEBUG0(x)     if(FLASH_DEBUG>1) { FLASH_PRINTLN(x, HEX); }
+#define FLASH_LOGDEBUG1(x,y)      if(FLASH_DEBUG>1) { FLASH_PRINT("[FLASH] "); FLASH_PRINT(x); FLASH_PRINT_SP; FLASH_PRINTLN(y); }
+#define FLASH_LOGDEBUG2(x,y,z)    if(FLASH_DEBUG>1) { FLASH_PRINT("[FLASH] "); FLASH_PRINT(x); FLASH_PRINT_SP; FLASH_PRINT(y); FLASH_PRINT_SP; FLASH_PRINTLN(z); }
+#define FLASH_LOGDEBUG3(x,y,z,w)  if(FLASH_DEBUG>1) { FLASH_PRINT("[FLASH] "); FLASH_PRINT(x); FLASH_PRINT_SP; FLASH_PRINT(y); FLASH_PRINT_SP; FLASH_PRINT(z); FLASH_PRINT_SP; FLASH_PRINTLN(w); }
+
+
+//////////////////////////////////////////////////////////
 
 // Concatenate after macro expansion
 #define PPCAT_NX(A, B) A ## B
@@ -68,55 +120,62 @@
 
 #endif
 
-class FlashClass {
-public:
-  FlashClass(const void *flash_addr = NULL, uint32_t size = 0);
+/////////////////////////////////////////////////////
 
-  void write(const void *data) { write(flash_address, data, flash_size); }
-  void erase()                 { erase(flash_address, flash_size);       }
-  void read(void *data)        { read(flash_address, data, flash_size);  }
+class FlashClass 
+{
+  public:
+    FlashClass(const void *flash_addr = NULL, uint32_t size = 0);
 
-  void write(const volatile void *flash_ptr, const void *data, uint32_t size);
-  void erase(const volatile void *flash_ptr, uint32_t size);
-  void read(const volatile void *flash_ptr, void *data, uint32_t size);
+    void write(const void *data) { write(flash_address, data);        }
+    void erase()                 { erase(flash_address, flash_size);  }
+    void read(void *data)        { read(flash_address, data);         }
 
-private:
-  void erase(const volatile void *flash_ptr);
+    void write(const volatile void *flash_ptr, const void *data);
+    void erase(const volatile void *flash_ptr, uint32_t size);
+    void read(const volatile void *flash_ptr, void *data);
 
-  const uint32_t PAGE_SIZE, PAGES, MAX_FLASH, ROW_SIZE;
-  const volatile void *flash_address;
-  const uint32_t flash_size;
+  private:
+    void erase(const volatile void *flash_ptr);
+
+    const uint32_t PAGE_SIZE, PAGES, MAX_FLASH, ROW_SIZE;
+    const volatile void *flash_address;
+    const uint32_t flash_size;
 };
+
+/////////////////////////////////////////////////////
 
 template<class T>
-class FlashStorageClass {
-public:
-  FlashStorageClass(const void *flash_addr) : flash(flash_addr, sizeof(T)) { };
+class FlashStorageClass 
+{
+  public:
+    FlashStorageClass(const void *flash_addr) : flash(flash_addr, sizeof(T)) { };
 
-  // Write data into flash memory.
-  // Compiler is able to optimize parameter copy.
-  inline void write(T data)  { flash.erase(); flash.write(&data); }
+    // Write data into flash memory.
+    // Compiler is able to optimize parameter copy.
+    inline void write(T &data)  { flash.erase(); flash.write(&data); }
 
-  // Read data from flash into variable.
-  inline void read(T *data)  { flash.read(data); }
+    // Overloaded version of read.
+    // Compiler is able to optimize copy-on-return.
+    inline void read(T &data)  { flash.read(&data); }
 
-  // Overloaded version of read.
-  // Compiler is able to optimize copy-on-return.
-  inline T read() { T data; read(&data); return data; }
-
-private:
-  FlashClass flash;
+  private:
+    FlashClass flash;
 };
 
+/////////////////////////////////////////////////////
+
+#include <FlashAsEEPROM_SAMD.h> 
+
 #if    ( defined(__SAMD51__) || defined(__SAMD51J20A__) || defined(__SAMD51J19A__) || defined(__SAMD51G19A__)  )
-#include "FlashStorage_SAMD51.h"
+  #include "FlashStorage_SAMD51.h"
 #elif    ( defined(ARDUINO_SAMD_ZERO) || defined(ARDUINO_SAMD_MKR1000) || defined(ARDUINO_SAMD_MKRWIFI1010) \
       || defined(ARDUINO_SAMD_NANO_33_IOT) || defined(ARDUINO_SAMD_MKRFox1200) || defined(ARDUINO_SAMD_MKRWAN1300) || defined(ARDUINO_SAMD_MKRWAN1310) \
       || defined(ARDUINO_SAMD_MKRGSM1400) || defined(ARDUINO_SAMD_MKRNB1500) || defined(ARDUINO_SAMD_MKRVIDOR4000) || defined(__SAMD21G18A__) \
-      || defined(ARDUINO_SAMD_CIRCUITPLAYGROUND_EXPRESS) || defined(__SAMD21E18A__) )
-#include "FlashStorage_SAMD21.h"
+      || defined(ARDUINO_SAMD_CIRCUITPLAYGROUND_EXPRESS) || defined(__SAMD21E18A__) || defined(_SAML21E18B_) || defined(ARDUINO_SAML_INDUSTRUINO_420MAKER) )
+  #include "FlashStorage_SAMD21.h"
 #else
-#error This code is intended to run only on the SAMD21 or SAMD51 boards ! Please check your Tools->Board setting.
-#endif    
-      
+  #error This code is intended to run only on the SAMD21 or SAMD51 boards ! Please check your Tools->Board setting.
+#endif
+
 #endif    //#ifndef FlashStorage_SAMD_h

@@ -22,12 +22,13 @@
   You should have received a copy of the GNU Lesser General Public License along with this library. 
   If not, see (https://www.gnu.org/licenses/)
   
-  Version: 1.1.0
+  Version: 1.2.0
 
   Version Modified By   Date        Comments
   ------- -----------  ----------   -----------
   1.0.0   K Hoang      28/03/2020  Initial coding to add support to SAMD51 besides SAMD21
   1.1.0   K Hoang      26/01/2021  Add supports to put() and get() for writing and reading the whole object. Fix bug.
+  1.2.0   K Hoang      18/08/2021  Optimize code. Add debug option
  ******************************************************************************************************************************************/
 
 #pragma once
@@ -36,7 +37,13 @@
 #ifndef FlashStorage_SAMD51_h
 #define FlashStorage_SAMD51_h
 
+#ifndef BOARD_NAME
+  #define BOARD_NAME    "Unknown SAMD51 board"
+#endif
+
 static const uint32_t pageSizes[] = { 8, 16, 32, 64, 128, 256, 512, 1024 };
+
+/////////////////////////////////////////////////////
 
 FlashClass::FlashClass(const void *flash_addr, uint32_t size) :
   PAGE_SIZE(pageSizes[NVMCTRL->PARAM.bit.PSZ]),
@@ -47,6 +54,8 @@ FlashClass::FlashClass(const void *flash_addr, uint32_t size) :
   flash_size(size)
 {
 }
+
+/////////////////////////////////////////////////////
 
 static inline uint32_t read_unaligned_uint32(const void *data)
 {
@@ -62,10 +71,13 @@ static inline uint32_t read_unaligned_uint32(const void *data)
   return res.u32;
 }
 
-void FlashClass::write(const volatile void *flash_ptr, const void *data, uint32_t size)
+/////////////////////////////////////////////////////
+
+void FlashClass::write(const volatile void *flash_ptr, const void *data)
 {
   // Calculate data boundaries
-  size = (size + 3) / 4;
+  uint32_t size = (flash_size + 3) / 4;
+  
   volatile uint32_t *dst_addr = (volatile uint32_t *)flash_ptr;
   const uint8_t *src_addr = (uint8_t *)data;
 
@@ -84,7 +96,7 @@ void FlashClass::write(const volatile void *flash_ptr, const void *data, uint32_
     8. Make sure NVM is ready to accept a new command (NVMCTRL.STATUS).
     9. Clear the DONE Flag (NVMCTRL.INTFLAG).
   */
- //KH
+  //KH
  
   // 2. Make sure the NVM is ready to accept a new command (NVMCTRL.STATUS).
   while (NVMCTRL->STATUS.bit.READY != NVMCTRL_STATUS_READY ) { } 
@@ -105,6 +117,7 @@ void FlashClass::write(const volatile void *flash_ptr, const void *data, uint32_
     // 6. Write data to page buffer with 32-bit accesses at the needed address.
     // Fill page buffer
     uint32_t i;
+    
     for (i=0; i<(PAGE_SIZE/4) && size; i++) 
     {
       *dst_addr = read_unaligned_uint32(src_addr);
@@ -125,16 +138,37 @@ void FlashClass::write(const volatile void *flash_ptr, const void *data, uint32_
   }
 }
 
+/////////////////////////////////////////////////////
+
+void FlashClass::read(const volatile void *flash_ptr, void *data)
+{
+  FLASH_LOGERROR3(F("MAX_FLASH (KB) = "), MAX_FLASH / 1024, F(", ROW_SIZE ="), ROW_SIZE);
+  FLASH_LOGERROR1(F("FlashStorage size = "), flash_size);
+  FLASH_LOGERROR0(F("FlashStorage Start Address: 0x")); FLASH_HEXLOGERROR0((uint32_t ) flash_address);
+  
+  FLASH_LOGDEBUG0(F("Read: flash_ptr = 0x")); FLASH_HEXLOGDEBUG0((uint32_t ) flash_ptr);
+  FLASH_LOGDEBUG0(F("data = 0x")); FLASH_HEXLOGDEBUG0(* (uint32_t *) data);
+  
+  memcpy(data, (const void *)flash_ptr, flash_size);
+}
+
+/////////////////////////////////////////////////////
+
 void FlashClass::erase(const volatile void *flash_ptr, uint32_t size)
 {
   const uint8_t *ptr = (const uint8_t *)flash_ptr;
-  while (size > ROW_SIZE) {
+  
+  while (size > ROW_SIZE) 
+  {
     erase(ptr);
     ptr += ROW_SIZE;
     size -= ROW_SIZE;
   }
+  
   erase(ptr);
 }
+
+/////////////////////////////////////////////////////
 
 void FlashClass::erase(const volatile void *flash_ptr)
 {
@@ -146,14 +180,7 @@ void FlashClass::erase(const volatile void *flash_ptr)
   while (NVMCTRL->INTFLAG.bit.DONE == 0) { }
 }
 
-void FlashClass::read(const volatile void *flash_ptr, void *data, uint32_t size)
-{
-  memcpy(data, (const void *)flash_ptr, size);
-  //Serial.print("Addr = ");
-  //Serial.println((int32_t ) flash_ptr);
-  //Serial.print("data = ");
-  //Serial.println( * (int32_t *) data);
-}
+/////////////////////////////////////////////////////
 
 #endif      //#ifndef FlashStorage_SAMD51_h
 

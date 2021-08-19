@@ -15,6 +15,7 @@
   * [Features](#features)
   * [Currently supported Boards](#currently-supported-boards)
 * [Changelog](#changelog)
+  * [Releases v1.2.0](#releases-v120)
   * [Releases v1.1.0](#releases-v110)
   * [Releases v1.0.0](#releases-v100)
 * [Prerequisites](#prerequisites)
@@ -93,11 +94,19 @@ The flash memory, generally used to store the firmware code, can also be used to
   - **Adafruit SAM21 (Itsy-Bitsy M0, Metro M0, Feather M0, Gemma M0, etc.)**.
   - **Adafruit SAM51 (Itsy-Bitsy M4, Metro M4, Grand Central M4, Feather M4 Express, etc.)**.
   - **Seeeduino SAMD21/SAMD51 boards (SEEED_WIO_TERMINAL, SEEED_FEMTO_M0, SEEED_XIAO_M0, Wio_Lite_MG126, WIO_GPS_BOARD, SEEEDUINO_ZERO, SEEEDUINO_LORAWAN, SEEED_GROVE_UI_WIRELESS, etc.)** 
-  
+  - **Industruino DG21**
+  - **Industruino 420MAKER**
 ---
 ---
 
 ## Changelog
+
+### Releases v1.2.0
+
+1. Optimize code.
+2. Add debug option.
+3. Add support to Industruino DG21 boards using [IndustruinoSAMD core]((https://github.com/Industruino/IndustruinoSAMD))
+4. Add support to Industruino 420MAKER boards using [IndustruinoSAML core](https://github.com/Industruino/IndustruinoSAMx)
 
 ### Releases v1.1.0
 
@@ -118,10 +127,12 @@ The flash memory, generally used to store the firmware code, can also be used to
  
 ## Prerequisites
 
- 1. [`Arduino IDE v1.8.13+` for Arduino](https://www.arduino.cc/en/Main/Software)
+ 1. [`Arduino IDE v1.8.15+` for Arduino](https://www.arduino.cc/en/Main/Software)
  2. [`Arduino SAMD core 1.8.11+`](https://github.com/arduino/ArduinoCore-samd) for SAMD ARM Cortex-M0+ boards. [![GitHub release](https://img.shields.io/github/release/arduino/ArduinoCore-samd.svg)](https://github.com/arduino/ArduinoCore-samd/releases/latest)
- 3. [`Adafruit SAMD core 1.6.5+`](https://github.com/adafruit/ArduinoCore-samd) for SAMD ARM Cortex-M0+ and M4 boards (Nano 33 IoT, etc.). [![GitHub release](https://img.shields.io/github/release/adafruit/ArduinoCore-samd.svg)](https://github.com/adafruit/ArduinoCore-samd/releases/latest)
+ 3. [`Adafruit SAMD core 1.7.4+`](https://github.com/adafruit/ArduinoCore-samd) for SAMD ARM Cortex-M0+ and M4 boards (Nano 33 IoT, etc.). [![GitHub release](https://img.shields.io/github/release/adafruit/ArduinoCore-samd.svg)](https://github.com/adafruit/ArduinoCore-samd/releases/latest)
  4. [`Seeeduino SAMD core 1.8.1+`](https://github.com/Seeed-Studio/ArduinoCore-samd) for SAMD21/SAMD51 boards (XIAO M0, Wio Terminal, etc.). [![Latest release](https://img.shields.io/github/release/Seeed-Studio/ArduinoCore-samd.svg)](https://github.com/Seeed-Studio/ArduinoCore-samd/releases/latest/)
+ 5. [`IndustruinoSAMD core 1.0.1+`](https://github.com/Industruino/IndustruinoSAMD) for SAMD21 boards (Industruino DG21, etc.). [![Latest release](https://img.shields.io/github/release/Industruino/IndustruinoSAMD.svg)](https://github.com/Industruino/IndustruinoSAMD/releases/latest/)
+ 6. [`IndustruinoSAML core 1.0.0+`](https://github.com/Industruino/IndustruinoSAMx) for SAML21 boards (Industruino 420MAKER, etc.). [![Latest release](https://img.shields.io/github/release/Industruino/IndustruinoSAMx.svg)](https://github.com/Industruino/IndustruinoSAMx/releases/latest/)
 
 ---
 
@@ -266,7 +277,7 @@ int user_age = age_storage.read();
 
 ### Using the alternative EEPROM-like API
 
-Include `FlashAsEEPROM_SAMD.h` to get an EEPROM emulation with the internal flash memory.
+Include `FlashStorage_SAMD.h` to get an EEPROM emulation with the internal flash memory.
 
 See [EmulateEEPROM](examples/EmulateEEPROM) sketch for an example.
 
@@ -354,8 +365,12 @@ The API is very similar to the well-known [Arduino EEPROM library API](https://w
 
 ```cpp
 // Demonstrate how to use FlashStorage_SAMD with an API that is similar to the EEPROM library to Store and retrieve structured data.
+//#define EEPROM_EMULATION_SIZE     (4 * 1024)
 
-#include <FlashAsEEPROM_SAMD.h>
+// Use 0-2. Larger for more debugging messages
+#define FLASH_DEBUG       0
+
+#include <FlashStorage_SAMD.h>
 
 const int WRITTEN_SIGNATURE = 0xBEEFDEED;
 
@@ -537,7 +552,7 @@ BBBBBBBBB BBBBBBBBBB BBBBBBBBBB BBBBBBBBBB BBBBBBBBBB BBBBBBBBBB BBBBBBBBBB
 
 ```
 Start StoreNameAndSurname on SEEED_XIAO_M0
-FlashStorage_SAMD v1.1.0
+FlashStorage_SAMD v1.2.0
 EEPROM length: 1024
 EEPROM is empty, writing WRITTEN_SIGNATURE and some example data:
 Insert your name : John
@@ -552,7 +567,7 @@ You can reset to check emulated-EEPROM data retention.
 
 ```
 Start StoreNameAndSurname on SEEED_XIAO_M0
-FlashStorage_SAMD v1.1.0
+FlashStorage_SAMD v1.2.0
 EEPROM length: 1024
 Hi John Doe, nice to see you again :-)
 Clearing WRITTEN_SIGNATURE for next try
@@ -567,7 +582,7 @@ Done clearing signature in emulated EEPROM. You can reset now
 
 ```
 Start EEPROM_Clear on SEEED_XIAO_M0
-FlashStorage_SAMD v1.1.0
+FlashStorage_SAMD v1.2.0
 
 Emulated EEPROM length (bytes) = 1024
 
@@ -579,7 +594,7 @@ Done clearing emulated EEPROM. Time spent (ms) = 11
 
 ```
 Start EEPROM_Clear on SEEED_XIAO_M0
-FlashStorage_SAMD v1.1.0
+FlashStorage_SAMD v1.2.0
 Emulated EEPROM length (bytes) = 2048
 Done clearing emulated EEPROM. Time spent (ms) = 22
 ```
@@ -588,7 +603,7 @@ Done clearing emulated EEPROM. Time spent (ms) = 22
 
 ```
 Start EEPROM_Clear on SEEED_XIAO_M0
-FlashStorage_SAMD v1.1.0
+FlashStorage_SAMD v1.2.0
 Emulated EEPROM length (bytes) = 4096
 Done clearing emulated EEPROM. Time spent (ms) = 42
 ```
@@ -601,7 +616,7 @@ Done clearing emulated EEPROM. Time spent (ms) = 42
 
 ```
 Start EEPROM_get on SEEED_XIAO_M0
-FlashStorage_SAMD v1.1.0
+FlashStorage_SAMD v1.2.0
 EEPROM length: 1024
 EEPROM doesn't store valid data, writing WRITTEN_SIGNATURE and some example data
 Float written to EEPROM: 123.456
@@ -618,7 +633,7 @@ Reset to see how you can retrieve the values by using EEPROM_get!
 
 ```
 Start EEPROM_get on SEEED_XIAO_M0
-FlashStorage_SAMD v1.1.0
+FlashStorage_SAMD v1.2.0
 EEPROM length: 1024
 EEPROM has valid data with WRITTEN_SIGNATURE. Now read some example data
 Read float from EEPROM: 123.456
@@ -664,6 +679,13 @@ Sometimes, the library will only work if you update the board core to the latest
 
 ## Releases
 
+### Releases v1.2.0
+
+1. Optimize code.
+2. Add debug option.
+3. Add support to Industruino DG21 boards using [IndustruinoSAMD core]((https://github.com/Industruino/IndustruinoSAMD))
+4. Add support to Industruino 420MAKER boards using [IndustruinoSAML core](https://github.com/Industruino/IndustruinoSAMx)
+
 ### Releases v1.1.0
 
 1. Add supports to `EEPROM.put()` and `EEPROM.get()` for efficiently writing and reading the whole object. 
@@ -688,6 +710,8 @@ Sometimes, the library will only work if you update the board core to the latest
   - **Adafruit SAM21 (Itsy-Bitsy M0, Metro M0, Feather M0, Gemma M0, etc.)**.
   - **Adafruit SAM51 (Itsy-Bitsy M4, Metro M4, Grand Central M4, Feather M4 Express, etc.)**.
   - **Seeeduino SAMD21/SAMD51 boards (SEEED_WIO_TERMINAL, SEEED_FEMTO_M0, SEEED_XIAO_M0, Wio_Lite_MG126, WIO_GPS_BOARD, SEEEDUINO_ZERO, SEEEDUINO_LORAWAN, SEEED_GROVE_UI_WIRELESS, etc.)** 
+  - **Industruino DG21**
+  - **Industruino 420MAKER**
 
 ---
 ---
@@ -711,6 +735,7 @@ Submit issues to: [FlashStorage_SAMD issues](https://github.com/khoih-prog/Flash
 2. Add `EEPROM.put()` and `EEPROM.get()` functions to read/write the whole struct in emulated-EEPROM
 3. Similar features for STM32F/L/H/G/WB/MP1.
 4. Add Table of Contents
+5. Add support to Industruino SAMD21 DG21 and Industruino SAML21 420MAKER boards
 
 ---
 ---

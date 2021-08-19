@@ -22,12 +22,13 @@
   You should have received a copy of the GNU Lesser General Public License along with this library. 
   If not, see (https://www.gnu.org/licenses/)
   
-  Version: 1.1.0
+  Version: 1.2.0
 
   Version Modified By   Date        Comments
   ------- -----------  ----------   -----------
   1.0.0   K Hoang      28/03/2020  Initial coding to add support to SAMD51 besides SAMD21
   1.1.0   K Hoang      26/01/2021  Add supports to put() and get() for writing and reading the whole object. Fix bug.
+  1.2.0   K Hoang      18/08/2021  Optimize code. Add debug option
  ******************************************************************************************************************************************/
 
 #pragma once
@@ -37,10 +38,14 @@
 
 FlashStorage(eeprom_storage, EEPROM_EMULATION);
 
+/////////////////////////////////////////////////////
+
 EEPROMClass::EEPROMClass() : _initialized(false), _dirty(false), _commitASAP(true)  
 {
   // Empty
 }
+
+/////////////////////////////////////////////////////
 
 uint8_t EEPROMClass::read(int address)
 {
@@ -49,6 +54,8 @@ uint8_t EEPROMClass::read(int address)
     
   return _eeprom.data[address];
 }
+
+/////////////////////////////////////////////////////
 
 void EEPROMClass::update(int address, uint8_t value)
 {
@@ -62,15 +69,19 @@ void EEPROMClass::update(int address, uint8_t value)
   }
 }
 
+/////////////////////////////////////////////////////
+
 void EEPROMClass::write(int address, uint8_t value)
 {
   update(address, value);
 }
 
+/////////////////////////////////////////////////////
 
 void EEPROMClass::init()
-{
-  _eeprom = eeprom_storage.read();
+{ 
+  // Use reference
+  eeprom_storage.read(_eeprom);
   
   if (_eeprom.signature != SAMD_EEPROM_EMULATION_SIGNATURE)
   {
@@ -82,6 +93,8 @@ void EEPROMClass::init()
    
   _initialized = true;
 }
+
+/////////////////////////////////////////////////////
  
 /**
  * Read from eeprom cells to an object
@@ -105,6 +118,8 @@ template< typename T > T& EEPROMClass::get( int idx, T &t )
     
   return t;
 }
+
+/////////////////////////////////////////////////////
 
 /**
 * Read from eeprom cells to an object
@@ -143,6 +158,8 @@ template< typename T > const T& EEPROMClass::put( int idx, const T &t )
   return t;
 }
 
+/////////////////////////////////////////////////////
+
 bool EEPROMClass::isValid()
 {
   if (!_initialized) 
@@ -150,6 +167,8 @@ bool EEPROMClass::isValid()
     
   return _eeprom.valid;
 }
+
+/////////////////////////////////////////////////////
 
 void EEPROMClass::commit()
 {
@@ -164,6 +183,8 @@ void EEPROMClass::commit()
     eeprom_storage.write(_eeprom);
   }
 }
+
+/////////////////////////////////////////////////////
 
 EEPROMClass EEPROM;
 

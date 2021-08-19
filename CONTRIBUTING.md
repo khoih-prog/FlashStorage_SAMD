@@ -14,8 +14,8 @@ If you don't find anything, please [open a new issue](https://github.com/khoih-p
 
 Please ensure to specify the following:
 
-* Arduino IDE version (e.g. 1.8.13) or Platform.io version
-* `SAMD` Core Version (e.g. Arduino SAMD core v1.8.11, Adafruit SAMD core v1.6.4, Seeed Studio SAMD v1.8.1)
+* Arduino IDE version (e.g. 1.8.15) or Platform.io version
+* `SAMD` Core Version (e.g. Arduino SAMD core v1.8.11, Adafruit SAMD core v1.7.4, Seeed Studio SAMD v1.8.1)
 * Contextual information (e.g. what you were trying to achieve)
 * Simplest possible steps to reproduce
 * Anything that might be relevant in your opinion, such as:
@@ -26,10 +26,10 @@ Please ensure to specify the following:
 ### Example
 
 ```
-Arduino IDE version: 1.8.13
+Arduino IDE version: 1.8.15
 Arduino SAMD Core Version 1.8.11
 OS: Ubuntu 20.04 LTS
-Linux Inspiron-3593 5.4.0-64-generic #72-Ubuntu SMP Fri Jan 15 10:27:54 UTC 2021 x86_64 x86_64 x86_64 GNU/Linux
+Linux Inspiron-3593 5.4.0-81-generic #91-Ubuntu SMP Thu Jul 15 19:09:17 UTC 2021 x86_64 x86_64 x86_64 GNU/Linux
 
 Context:
 I encountered a crash while trying to use the Timer Interrupt.
@@ -39,6 +39,7 @@ Steps to reproduce:
 2. ...
 3. ...
 4. ...
+```
 
 ### Sending Feature Requests
 
