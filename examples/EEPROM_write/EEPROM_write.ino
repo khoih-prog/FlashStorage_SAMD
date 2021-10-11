@@ -21,14 +21,6 @@
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
   You should have received a copy of the GNU Lesser General Public License along with this library. 
   If not, see (https://www.gnu.org/licenses/)
-  
-  Version: 1.2.0
-
-  Version Modified By   Date        Comments
-  ------- -----------  ----------   -----------
-  1.0.0   K Hoang      28/03/2020  Initial coding to add support to SAMD51 besides SAMD21
-  1.1.0   K Hoang      26/01/2021  Add supports to put() and get() for writing and reading the whole object. Fix bug.
-  1.2.0   K Hoang      18/08/2021  Optimize code. Add debug option
  ******************************************************************************************************************************************/
 /*
    EEPROM Write

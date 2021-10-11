@@ -14,10 +14,7 @@
 * [Why do we need this FlashStorage_SAMD library](#why-do-we-need-this-flashstorage_samd-library)
   * [Features](#features)
   * [Currently supported Boards](#currently-supported-boards)
-* [Changelog](#changelog)
-  * [Releases v1.2.0](#releases-v120)
-  * [Releases v1.1.0](#releases-v110)
-  * [Releases v1.0.0](#releases-v100)
+* [Changelog](changelog.md)
 * [Prerequisites](#prerequisites)
 * [Installation](#installation)
   * [Use Arduino Library Manager](#use-arduino-library-manager)
@@ -102,42 +99,16 @@ The flash memory, generally used to store the firmware code, can also be used to
 ---
 ---
 
-## Changelog
-
-### Releases v1.2.0
-
-1. Optimize code.
-2. Add debug option.
-3. Add support to Industruino DG21 boards using [`IndustruinoSAMD core`](https://github.com/Industruino/IndustruinoSAMD)
-4. Add support to Industruino 420MAKER boards using [`IndustruinoSAML core`](https://github.com/Industruino/IndustruinoSAMx)
-5. Add support to Sparkfun SAMD21 and SAMD51 boards using [`Sparkfun SAMD core`](https://github.com/sparkfun/Arduino_Boards)
-
-### Releases v1.1.0
-
-1. Add supports to `EEPROM.put()` and `EEPROM.get()` for efficiently writing and reading the whole object. 
-2. Add `_commitASAP` flag to permit reduce the number of calls to `EEPROM.commit()` to extend the flash life.
-3. Add many modified examples from [Arduino EEPROM library](https://www.arduino.cc/en/Reference/EEPROM)
-4. Fix bug.
-
-### Releases v1.0.0
-
-1. Add support to SAMD51 family such as 
-
-  - Adafruit SAMD51 (M4): Metro M4, Grand Central M4, ItsyBitsy M4, Feather M4 Express, Trellis M4, Metro M4 AirLift Lite, MONSTER M4SK Express, Hallowing M4, etc.
-  - Seeeduino: Wio Terminal, Grove UI WirelessAdafruit Itsy-Bitsy M4, etc.
-
----
----
  
 ## Prerequisites
 
- 1. [`Arduino IDE v1.8.15+` for Arduino](https://www.arduino.cc/en/Main/Software)
+ 1. [`Arduino IDE v1.8.16+` for Arduino](https://www.arduino.cc/en/Main/Software)
  2. [`Arduino SAMD core 1.8.11+`](https://github.com/arduino/ArduinoCore-samd) for SAMD ARM Cortex-M0+ boards. [![GitHub release](https://img.shields.io/github/release/arduino/ArduinoCore-samd.svg)](https://github.com/arduino/ArduinoCore-samd/releases/latest)
- 3. [`Adafruit SAMD core 1.7.4+`](https://github.com/adafruit/ArduinoCore-samd) for SAMD ARM Cortex-M0+ and M4 boards (Nano 33 IoT, etc.). [![GitHub release](https://img.shields.io/github/release/adafruit/ArduinoCore-samd.svg)](https://github.com/adafruit/ArduinoCore-samd/releases/latest)
- 4. [`Seeeduino SAMD core 1.8.1+`](https://github.com/Seeed-Studio/ArduinoCore-samd) for SAMD21/SAMD51 boards (XIAO M0, Wio Terminal, etc.). [![Latest release](https://img.shields.io/github/release/Seeed-Studio/ArduinoCore-samd.svg)](https://github.com/Seeed-Studio/ArduinoCore-samd/releases/latest/)
- 5. [`IndustruinoSAMD core 1.0.1+`](https://github.com/Industruino/IndustruinoSAMD) for SAMD21 boards (Industruino DG21, etc.).
+ 3. [`Adafruit SAMD core 1.7.5+`](https://github.com/adafruit/ArduinoCore-samd) for SAMD ARM Cortex-M0+ and M4 boards (Nano 33 IoT, etc.). [![GitHub release](https://img.shields.io/github/release/adafruit/ArduinoCore-samd.svg)](https://github.com/adafruit/ArduinoCore-samd/releases/latest)
+ 4. [`Seeeduino SAMD core 1.8.2+`](https://github.com/Seeed-Studio/ArduinoCore-samd) for SAMD21/SAMD51 boards (XIAO M0, Wio Terminal, etc.). [![Latest release](https://img.shields.io/github/release/Seeed-Studio/ArduinoCore-samd.svg)](https://github.com/Seeed-Studio/ArduinoCore-samd/releases/latest/)
+ 5. [`IndustruinoSAMD core 1.0.3+`](https://github.com/Industruino/IndustruinoSAMD) for SAMD21 boards (Industruino DG21, etc.).
  6. [`IndustruinoSAML core 1.0.0+`](https://github.com/Industruino/IndustruinoSAMx) for SAML21 boards (Industruino 420MAKER, etc.).
- 7. [`Sparkfun SAMD core 1.8.1+`](https://github.com/sparkfun/Arduino_Boards) for SAMD21/SAMD51 boards (SparkFun_RedBoard_Turbo, SparkFun_SAMD51_Thing_Plus, etc.).
+ 7. [`Sparkfun SAMD core 1.8.4+`](https://github.com/sparkfun/Arduino_Boards) for SAMD21/SAMD51 boards (SparkFun_RedBoard_Turbo, SparkFun_SAMD51_Thing_Plus, etc.).
  
 ---
 
@@ -171,7 +142,7 @@ Another way to install is to:
 
 #### 1. For Arduino SAMD boards
  
- ***To be able to compile without error and automatically detect and display BOARD_NAME on Arduino SAMD (Nano-33-IoT, etc) boards***, you have to copy the whole [Arduino SAMD cores 1.8.11](Packages_Patches/arduino/hardware/samd/1.8.11) directory into Arduino SAMD directory (~/.arduino15/packages/arduino/hardware/samd/1.8.11).
+ ***To be able to compile, run and automatically detect and display BOARD_NAME on Arduino SAMD (Nano-33-IoT, etc) boards***, you have to copy the whole [Arduino SAMD Packages_Patches](Packages_Patches/arduino/hardware/samd/1.8.11) directory into Arduino SAMD directory (~/.arduino15/packages/arduino/hardware/samd/1.8.11).
  
 #### For core version v1.8.10+
 
@@ -210,29 +181,39 @@ Whenever the above-mentioned compiler error issue is fixed with the new Arduino 
 
 #### 2. For Adafruit SAMD boards
  
- ***To be able to automatically detect and display BOARD_NAME on Adafruit SAMD (Itsy-Bitsy M4, etc) boards***, you have to copy the file [Adafruit SAMD platform.txt](Packages_Patches/adafruit/hardware/samd/1.6.4) into Adafruit samd directory (~/.arduino15/packages/adafruit/hardware/samd/1.6.4). 
+ ***To be able to compile, run and automatically detect and display BOARD_NAME on Adafruit SAMD (Itsy-Bitsy M4, etc) boards***, you have to copy the whole [Adafruit SAMD Packages_Patches](Packages_Patches/adafruit/hardware/samd/1.7.5) directory into Adafruit samd directory (~/.arduino15/packages/adafruit/hardware/samd/1.7.5). 
 
-Supposing the Adafruit SAMD core version is 1.6.4. This file must be copied into the directory:
+Supposing the Adafruit SAMD core version is 1.7.5. This file must be copied into the directory:
 
-- `~/.arduino15/packages/adafruit/hardware/samd/1.6.4/platform.txt`
+- `~/.arduino15/packages/adafruit/hardware/samd/1.7.5/platform.txt`
+- `~/.arduino15/packages/adafruit/hardware/samd/1.7.5/cores/arduino/Print.h`
+- `~/.arduino15/packages/adafruit/hardware/samd/1.7.5/cores/arduino/Print.cpp`
 
 Whenever a new version is installed, remember to copy this file into the new version directory. For example, new version is x.yy.zz
 This file must be copied into the directory:
 
 - `~/.arduino15/packages/adafruit/hardware/samd/x.yy.zz/platform.txt`
+- `~/.arduino15/packages/adafruit/hardware/samd/x.yy.zz/cores/arduino/Print.h`
+- `~/.arduino15/packages/adafruit/hardware/samd/x.yy.zz/cores/arduino/Print.cpp`
 
 #### 3. For Seeeduino SAMD boards
  
- ***To be able to automatically detect and display BOARD_NAME on Seeeduino SAMD (XIAO M0, Wio Terminal, etc) boards***, you have to copy the file [Seeeduino SAMD platform.txt](Packages_Patches/Seeeduino/hardware/samd/1.8.1) into Adafruit samd directory (~/.arduino15/packages/Seeeduino/hardware/samd/1.8.1). 
+ ***To be able to compile, run and automatically detect and display BOARD_NAME on Seeeduino SAMD (XIAO M0, Wio Terminal, etc) boards***, you have to copy the whole [Seeeduino SAMD Packages_Patches](Packages_Patches/Seeeduino/hardware/samd/1.8.2) directory into Seeeduino samd directory (~/.arduino15/packages/Seeeduino/hardware/samd/1.8.2). 
 
-Supposing the Seeeduino SAMD core version is 1.8.1. This file must be copied into the directory:
+Supposing the Seeeduino SAMD core version is 1.8.2. This file must be copied into the directory:
 
-- `~/.arduino15/packages/Seeeduino/hardware/samd/1.8.1/platform.txt`
+- `~/.arduino15/packages/Seeeduino/hardware/samd/1.8.2/platform.txt`
+- `~/.arduino15/packages/Seeeduino/hardware/samd/1.8.2/cores/arduino/Arduino.h`
+- `~/.arduino15/packages/Seeeduino/hardware/samd/1.8.2/cores/arduino/Print.h`
+- `~/.arduino15/packages/Seeeduino/hardware/samd/1.8.2/cores/arduino/Print.cpp`
 
 Whenever a new version is installed, remember to copy this file into the new version directory. For example, new version is x.yy.zz
 This file must be copied into the directory:
 
 - `~/.arduino15/packages/Seeeduino/hardware/samd/x.yy.zz/platform.txt`
+- `~/.arduino15/packages/Seeeduino/hardware/samd/x.yy.zz/cores/arduino/Arduino.h`
+- `~/.arduino15/packages/Seeeduino/hardware/samd/x.yy.zz/cores/arduino/Print.h`
+- `~/.arduino15/packages/Seeeduino/hardware/samd/x.yy.zz/cores/arduino/Print.cpp`
 
 
 ---
@@ -557,7 +538,7 @@ BBBBBBBBB BBBBBBBBBB BBBBBBBBBB BBBBBBBBBB BBBBBBBBBB BBBBBBBBBB BBBBBBBBBB
 
 ```
 Start StoreNameAndSurname on SEEED_XIAO_M0
-FlashStorage_SAMD v1.2.0
+FlashStorage_SAMD v1.2.1
 EEPROM length: 1024
 EEPROM is empty, writing WRITTEN_SIGNATURE and some example data:
 Insert your name : John
@@ -572,7 +553,7 @@ You can reset to check emulated-EEPROM data retention.
 
 ```
 Start StoreNameAndSurname on SEEED_XIAO_M0
-FlashStorage_SAMD v1.2.0
+FlashStorage_SAMD v1.2.1
 EEPROM length: 1024
 Hi John Doe, nice to see you again :-)
 Clearing WRITTEN_SIGNATURE for next try
@@ -587,7 +568,7 @@ Done clearing signature in emulated EEPROM. You can reset now
 
 ```
 Start EEPROM_Clear on SEEED_XIAO_M0
-FlashStorage_SAMD v1.2.0
+FlashStorage_SAMD v1.2.1
 
 Emulated EEPROM length (bytes) = 1024
 
@@ -599,7 +580,7 @@ Done clearing emulated EEPROM. Time spent (ms) = 11
 
 ```
 Start EEPROM_Clear on SEEED_XIAO_M0
-FlashStorage_SAMD v1.2.0
+FlashStorage_SAMD v1.2.1
 Emulated EEPROM length (bytes) = 2048
 Done clearing emulated EEPROM. Time spent (ms) = 22
 ```
@@ -608,7 +589,7 @@ Done clearing emulated EEPROM. Time spent (ms) = 22
 
 ```
 Start EEPROM_Clear on SEEED_XIAO_M0
-FlashStorage_SAMD v1.2.0
+FlashStorage_SAMD v1.2.1
 Emulated EEPROM length (bytes) = 4096
 Done clearing emulated EEPROM. Time spent (ms) = 42
 ```
@@ -621,7 +602,7 @@ Done clearing emulated EEPROM. Time spent (ms) = 42
 
 ```
 Start EEPROM_get on SEEED_XIAO_M0
-FlashStorage_SAMD v1.2.0
+FlashStorage_SAMD v1.2.1
 EEPROM length: 1024
 EEPROM doesn't store valid data, writing WRITTEN_SIGNATURE and some example data
 Float written to EEPROM: 123.456
@@ -638,7 +619,7 @@ Reset to see how you can retrieve the values by using EEPROM_get!
 
 ```
 Start EEPROM_get on SEEED_XIAO_M0
-FlashStorage_SAMD v1.2.0
+FlashStorage_SAMD v1.2.1
 EEPROM length: 1024
 EEPROM has valid data with WRITTEN_SIGNATURE. Now read some example data
 Read float from EEPROM: 123.456
@@ -678,48 +659,6 @@ In the absence of an integrated-EEPROM or its size is too small for your use-cas
 If you get compilation errors, more often than not, you may need to install a newer version of the core for Arduino boards.
 
 Sometimes, the library will only work if you update the board core to the latest version because I am using newly added functions.
-
----
----
-
-## Releases
-
-### Releases v1.2.0
-
-1. Optimize code.
-2. Add debug option.
-3. Add support to Industruino DG21 boards using [`IndustruinoSAMD core`](https://github.com/Industruino/IndustruinoSAMD)
-4. Add support to Industruino 420MAKER boards using [`IndustruinoSAML core`](https://github.com/Industruino/IndustruinoSAMx)
-5. Add support to Sparkfun SAMD21 and SAMD51 boards using [`Sparkfun SAMD core`](https://github.com/sparkfun/Arduino_Boards)
-
-### Releases v1.1.0
-
-1. Add supports to `EEPROM.put()` and `EEPROM.get()` for efficiently writing and reading the whole object. 
-2. Add `_commitASAP` flag to permit reduce the number of calls to `EEPROM.commit()` to extend the flash life.
-3. Add many modified examples from [Arduino EEPROM library](https://www.arduino.cc/en/Reference/EEPROM)
-4. Fix bug.
-
-### Releases v1.0.0
-
-1. Add support to SAMD51 family such as 
-
-  - Adafruit SAMD51 (M4): Metro M4, Grand Central M4, ItsyBitsy M4, Feather M4 Express, Trellis M4, Metro M4 AirLift Lite, MONSTER M4SK Express, Hallowing M4, etc.
-  - Seeeduino: Wio Terminal, Grove UI WirelessAdafruit Itsy-Bitsy M4, etc.
-
----
-
-### Supported hardware
-
-### Currently supported Boards
-
-  - **Arduino SAMD21 (ZERO, MKR, NANO_33_IOT, etc.)**.
-  - **Adafruit SAM21 (Itsy-Bitsy M0, Metro M0, Feather M0, Gemma M0, etc.)**.
-  - **Adafruit SAM51 (Itsy-Bitsy M4, Metro M4, Grand Central M4, Feather M4 Express, etc.)**.
-  - **Seeeduino SAMD21/SAMD51 boards (SEEED_WIO_TERMINAL, SEEED_FEMTO_M0, SEEED_XIAO_M0, Wio_Lite_MG126, WIO_GPS_BOARD, SEEEDUINO_ZERO, SEEEDUINO_LORAWAN, SEEED_GROVE_UI_WIRELESS, etc.)** 
-  - **Industruino DG21**
-  - **Industruino 420MAKER**
-  - **Sparkfun SAMD21 boards** such as **SparkFun_RedBoard_Turbo, SparkFun_Qwiic_Micro, etc.**
-  - **Sparkfun SAMD51 boards** such as **SparkFun_SAMD51_Thing_Plus, SparkFun_SAMD51_MicroMod, etc.**
 
 ---
 ---
