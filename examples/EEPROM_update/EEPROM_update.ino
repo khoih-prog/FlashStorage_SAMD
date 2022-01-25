@@ -40,6 +40,7 @@
 // Use 0-2. Larger for more debugging messages
 #define FLASH_DEBUG       0
 
+// To be included only in main(), .ino with setup() to avoid `Multiple Definitions` Linker Error
 #include <FlashStorage_SAMD.h>
 
 /** the current address in the EEPROM (i.e. which byte we're going to write to next) **/

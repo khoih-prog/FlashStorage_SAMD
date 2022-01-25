@@ -38,6 +38,7 @@
 // Use 0-2. Larger for more debugging messages
 #define FLASH_DEBUG       0
 
+// To be included only in main(), .ino with setup() to avoid `Multiple Definitions` Linker Error
 #include <FlashStorage_SAMD.h>
 
 void setup()
@@ -59,7 +60,7 @@ void setup()
 
   for (int index = 0 ; index < EEPROM.length() ; index++) 
   {
-    // Add one to each cell in the EEPROM
+    // Add one to each cell in the EEPROM   
     EEPROM.write(index, EEPROM.read(index) + 1);
   }
 
@@ -75,7 +76,7 @@ void setup()
 
   while (index < EEPROM.length()) 
   {
-    // Add one to each cell in the EEPROM
+    // Add one to each cell in the EEPROM   
     EEPROM.write(index, EEPROM.read(index) + 1);
     index++;
   }
@@ -88,14 +89,14 @@ void setup()
     Iterate the EEPROM using a do-while loop.
   ***/
 
-  int idx = 0;  //Used 'idx' to avoid name conflict with 'index' above.
+  index = 0;  //Used 'idx' to avoid name conflict with 'index' above.
 
-  do 
+  do
   {
     // Add one to each cell in the EEPROM
     EEPROM.write(index, EEPROM.read(index) + 1);
-    idx++;
-  } while (idx < EEPROM.length());
+    index++;
+  } while (index < EEPROM.length());
 
   EEPROM.commit();
 

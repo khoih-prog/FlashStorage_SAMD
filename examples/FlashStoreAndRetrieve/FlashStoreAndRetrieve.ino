@@ -28,6 +28,7 @@
 // Use 0-2. Larger for more debugging messages
 #define FLASH_DEBUG       0
 
+// To be included only in main(), .ino with setup() to avoid `Multiple Definitions` Linker Error
 #include <FlashStorage_SAMD.h>
 
 // Note: the area of flash memory reserved for the variable is
