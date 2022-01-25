@@ -22,7 +22,7 @@
   You should have received a copy of the GNU Lesser General Public License along with this library. 
   If not, see (https://www.gnu.org/licenses/)
   
-  Version: 1.3.0
+  Version: 1.3.1
 
   Version Modified By   Date        Comments
   ------- -----------  ----------   -----------
@@ -30,7 +30,8 @@
   1.1.0   K Hoang      26/01/2021  Add supports to put() and get() for writing and reading the whole object. Fix bug.
   1.2.0   K Hoang      18/08/2021  Optimize code. Add debug option
   1.2.1   K Hoang      10/10/2021  Update `platform.ini` and `library.json`
-  1.3.0   K Hoang      10/10/2021  Fix `multiple-definitions` linker error. Add support to many more boards.
+  1.3.0   K Hoang      25/01/2022  Fix `multiple-definitions` linker error. Add support to many more boards.
+  1.3.1   K Hoang      25/01/2022  Reduce number of library files
  ******************************************************************************************************************************************/
 
 // The .hpp contains only definitions, and can be included as many times as necessary, without `Multiple Definitions` Linker Error
@@ -53,13 +54,13 @@
 #endif
 
 #ifndef FLASH_STORAGE_SAMD_VERSION
-  #define FLASH_STORAGE_SAMD_VERSION            "FlashStorage_SAMD v1.3.0"
+  #define FLASH_STORAGE_SAMD_VERSION            "FlashStorage_SAMD v1.3.1"
 
   #define FLASH_STORAGE_SAMD_VERSION_MAJOR      1
   #define FLASH_STORAGE_SAMD_VERSION_MINOR      3
-  #define FLASH_STORAGE_SAMD_VERSION_PATCH      0
+  #define FLASH_STORAGE_SAMD_VERSION_PATCH      1
 
-#define FLASH_STORAGE_SAMD_VERSION_INT        1003000
+#define FLASH_STORAGE_SAMD_VERSION_INT        1003001
 
 #endif
 
@@ -114,7 +115,7 @@ const char FLASH_SP[]    = " ";
 #define FLASH_LOGDEBUG3(x,y,z,w)  if(FLASH_DEBUG>1) { FLASH_PRINT("[FLASH] "); FLASH_PRINT(x); FLASH_PRINT_SP; FLASH_PRINT(y); FLASH_PRINT_SP; FLASH_PRINT(z); FLASH_PRINT_SP; FLASH_PRINTLN(w); }
 
 
-//////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Concatenate after macro expansion
 #define PPCAT_NX(A, B) A ## B
@@ -166,7 +167,7 @@ const char FLASH_SP[]    = " ";
 
 #endif
 
-/////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 class FlashClass 
 {
@@ -209,10 +210,225 @@ class FlashStorageClass
     FlashClass flash;
 };
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+#ifndef EEPROM_EMULATION_SIZE
+  #define EEPROM_EMULATION_SIZE 1024
+#endif
+
+const uint32_t SAMD_EEPROM_EMULATION_SIGNATURE = 0xFEEDDEED;
+
+typedef struct 
+{
+  byte data[EEPROM_EMULATION_SIZE];
+  bool valid;
+  uint32_t signature;
+} EEPROM_EMULATION;
+
 /////////////////////////////////////////////////////
 
 
-#include <FlashAsEEPROM_SAMD.hpp> 
+#if defined(__SAMD51__)
+  staticFlashStorage(eeprom_storage, EEPROM_EMULATION); 
+#else
+  staticFlashStorage(eeprom_storage, EEPROM_EMULATION);
+#endif
 
+
+class EEPROMClass 
+{
+  public:
+  
+  EEPROMClass() : _initialized(false), _dirty(false), _commitASAP(true)  
+  {
+    // Empty
+  }
+
+/////////////////////////////////////////////////////
+  /**
+   * Read an eeprom cell
+   * @param index
+   * @return value
+   */
+  //uint8_t read(int address);
+
+  uint8_t read(int address)
+  {
+    if (!_initialized) 
+      init();
+      
+    return _eeprom.data[address];
+  }
+
+/////////////////////////////////////////////////////
+
+  /**
+   * Update a eeprom cell
+   * @param index
+   * @param value
+   */
+
+  void update(int address, uint8_t value)
+  {
+    if (!_initialized) 
+      init();
+      
+    if (_eeprom.data[address] != value) 
+    {
+      _dirty = true;
+      _eeprom.data[address] = value;
+    }
+  }
+
+/////////////////////////////////////////////////////
+
+  /**
+   * Write value to an eeprom cell
+   * @param index
+   * @param value
+   */
+  void write(int address, uint8_t value)
+  {
+    update(address, value);
+  }
+
+/////////////////////////////////////////////////////
+  
+
+  /**
+   * Read from eeprom cells to an object
+  * @param index
+  * @param value
+  */
+  //Functionality to 'get' data to objects to from EEPROM.
+  template< typename T > T& get( int idx, T &t )
+  {       
+    // Copy the data from the flash to the buffer if not yet
+    if (!_initialized) 
+      init();
+      
+    uint16_t offset = idx;
+    uint8_t* _pointer = (uint8_t *) &t;
+    
+    for ( uint16_t count = sizeof(T) ; count ; --count, ++offset )
+    {  
+      *_pointer++ = _eeprom.data[offset];
+    }
+      
+    return t;
+  }
+
+/////////////////////////////////////////////////////
+
+  /**
+  * Read from eeprom cells to an object
+  * @param index
+  * @param value
+  */
+  //Functionality to 'get' data to objects to from EEPROM.
+  template< typename T > const T& put( int idx, const T &t )
+  {            
+    // Copy the data from the flash to the buffer if not yet
+    if (!_initialized) 
+      init();
+    
+    uint16_t offset = idx;
+       
+    const uint8_t* _pointer = (const uint8_t *) &t;
+    
+    for ( uint16_t count = sizeof(T) ; count ; --count, ++offset )
+    {              
+      _eeprom.data[offset] = *_pointer++;
+    }
+
+    if (_commitASAP)
+    {
+      _dirty = false;
+      _eeprom.valid = true;
+      // Save the data from the buffer
+      eeprom_storage.write(_eeprom);
+    }
+    else  
+    {
+      // Delay saving the data from the buffer to the flash. Just flag and wait for commit() later
+      _dirty = true;    
+    }
+         
+    return t;
+  }
+
+/////////////////////////////////////////////////////
+
+  /**
+   * Check whether the eeprom data is valid
+   * @return true, if eeprom data is valid (has been written at least once), false if not
+   */
+  bool isValid()
+  {
+    if (!_initialized) 
+    init();
+
+    return _eeprom.valid;
+  }
+
+/////////////////////////////////////////////////////
+
+  /**
+   * Write previously made eeprom changes to the underlying flash storage
+   * Use this with care: Each and every commit will harm the flash and reduce it's lifetime (like with every flash memory)
+   */
+  void commit()
+  {
+    if (!_initialized) 
+    init();
+
+    if (_dirty) 
+    {
+    _dirty = false;
+    _eeprom.valid = true;
+    // Save the data from the buffer
+    eeprom_storage.write(_eeprom);
+    }
+  }
+
+/////////////////////////////////////////////////////
+ 
+  uint16_t length() { return EEPROM_EMULATION_SIZE; }
+
+  void setCommitASAP(bool value = true) { _commitASAP = value; }
+  bool getCommitASAP() { return _commitASAP; }    
+  
+/////////////////////////////////////////////////////    
+
+  private:
+
+  void init()
+  { 
+    // Use reference
+    eeprom_storage.read(_eeprom);
+    
+    if (_eeprom.signature != SAMD_EEPROM_EMULATION_SIGNATURE)
+    {
+      memset(_eeprom.data, 0xFF, EEPROM_EMULATION_SIZE);
+      _eeprom.signature = SAMD_EEPROM_EMULATION_SIGNATURE;
+    }
+
+    _eeprom.valid = true;
+
+    _initialized = true;
+  }
+
+    bool _initialized;
+    EEPROM_EMULATION _eeprom;
+    bool _dirty;
+    bool _commitASAP;
+};
+
+/////////////////////////////////////////////////////
+
+static EEPROMClass EEPROM;
+
+/////////////////////////////////////////////////////
 
 #endif    //#ifndef FlashStorage_SAMD_hpp

@@ -22,7 +22,7 @@
   You should have received a copy of the GNU Lesser General Public License along with this library. 
   If not, see (https://www.gnu.org/licenses/)
   
-  Version: 1.3.0
+  Version: 1.3.1
 
   Version Modified By   Date        Comments
   ------- -----------  ----------   -----------
@@ -30,7 +30,8 @@
   1.1.0   K Hoang      26/01/2021  Add supports to put() and get() for writing and reading the whole object. Fix bug.
   1.2.0   K Hoang      18/08/2021  Optimize code. Add debug option
   1.2.1   K Hoang      10/10/2021  Update `platform.ini` and `library.json`
-  1.3.0   K Hoang      10/10/2021  Fix `multiple-definitions` linker error. Add support to many more boards.
+  1.3.0   K Hoang      25/01/2022  Fix `multiple-definitions` linker error. Add support to many more boards.
+  1.3.1   K Hoang      25/01/2022  Reduce number of library files
  ******************************************************************************************************************************************/
 
 // The .hpp contains only definitions, and can be included as many times as necessary, without `Multiple Definitions` Linker Error

@@ -12,6 +12,7 @@
 ## Table of Contents
 
 * [Changelog](#changelog)
+  * [Releases v1.3.1](#releases-v131)
   * [Releases v1.3.0](#releases-v130)
   * [Releases v1.2.1](#releases-v121)
   * [Releases v1.2.0](#releases-v120)
@@ -23,6 +24,11 @@
 ---
 
 ## Changelog
+
+### Releases v1.3.1
+
+1. Clean-up by reducing the number of library files
+
 
 ### Releases v1.3.0
 

@@ -574,7 +574,7 @@ BBBBBBBBB BBBBBBBBBB BBBBBBBBBB BBBBBBBBBB BBBBBBBBBB BBBBBBBBBB BBBBBBBBBB
 
 ```
 Start StoreNameAndSurname on SEEED_XIAO_M0
-FlashStorage_SAMD v1.3.0
+FlashStorage_SAMD v1.3.1
 EEPROM length: 1024
 EEPROM is empty, writing WRITTEN_SIGNATURE and some example data:
 Insert your name : John
@@ -589,7 +589,7 @@ You can reset to check emulated-EEPROM data retention.
 
 ```
 Start StoreNameAndSurname on SEEED_XIAO_M0
-FlashStorage_SAMD v1.3.0
+FlashStorage_SAMD v1.3.1
 EEPROM length: 1024
 Hi John Doe, nice to see you again :-)
 Clearing WRITTEN_SIGNATURE for next try
@@ -604,7 +604,7 @@ Done clearing signature in emulated EEPROM. You can reset now
 
 ```
 Start EEPROM_Clear on SEEED_XIAO_M0
-FlashStorage_SAMD v1.3.0
+FlashStorage_SAMD v1.3.1
 
 Emulated EEPROM length (bytes) = 1024
 
@@ -616,7 +616,7 @@ Done clearing emulated EEPROM. Time spent (ms) = 11
 
 ```
 Start EEPROM_Clear on SEEED_XIAO_M0
-FlashStorage_SAMD v1.3.0
+FlashStorage_SAMD v1.3.1
 Emulated EEPROM length (bytes) = 2048
 Done clearing emulated EEPROM. Time spent (ms) = 22
 ```
@@ -625,7 +625,7 @@ Done clearing emulated EEPROM. Time spent (ms) = 22
 
 ```
 Start EEPROM_Clear on SEEED_XIAO_M0
-FlashStorage_SAMD v1.3.0
+FlashStorage_SAMD v1.3.1
 Emulated EEPROM length (bytes) = 4096
 Done clearing emulated EEPROM. Time spent (ms) = 42
 ```
@@ -638,7 +638,7 @@ Done clearing emulated EEPROM. Time spent (ms) = 42
 
 ```
 Start EEPROM_get on SEEED_XIAO_M0
-FlashStorage_SAMD v1.3.0
+FlashStorage_SAMD v1.3.1
 EEPROM length: 1024
 EEPROM doesn't store valid data, writing WRITTEN_SIGNATURE and some example data
 Float written to EEPROM: 123.456
@@ -655,7 +655,7 @@ Reset to see how you can retrieve the values by using EEPROM_get!
 
 ```
 Start EEPROM_get on SEEED_XIAO_M0
-FlashStorage_SAMD v1.3.0
+FlashStorage_SAMD v1.3.1
 EEPROM length: 1024
 EEPROM has valid data with WRITTEN_SIGNATURE. Now read some example data
 Read float from EEPROM: 123.456
@@ -722,6 +722,8 @@ Submit issues to: [FlashStorage_SAMD issues](https://github.com/khoih-prog/Flash
 6. Add support to **Sparkfun SAMD21 and SAMD51 boards**
 7. Fix `multiple-definitions` linker error. 
 8. Add support to many more boards, such as `SAMD21E1xA`, `SAMD21G1xA` and`SAMD21J1xA`
+9. Clean-up by reducing the number of library files
+
 
 ---
 ---
