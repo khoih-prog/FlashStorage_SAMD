@@ -24,8 +24,8 @@
   #error This code is designed to run on SAMD21/SAMD51 platform! Please check your Tools->Board setting.
 #endif
 
-#define FLASH_STORAGE_SAMD_VERSION_MIN_TARGET      "FlashStorage_SAMD v1.3.1"
-#define FLASH_STORAGE_SAMD_VERSION_MIN             1003001
+#define FLASH_STORAGE_SAMD_VERSION_MIN_TARGET      "FlashStorage_SAMD v1.3.2"
+#define FLASH_STORAGE_SAMD_VERSION_MIN             1003002
 
 #include "multiFileProject.h"
 

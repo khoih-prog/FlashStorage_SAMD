@@ -1,5 +1,5 @@
 /******************************************************************************************************************************************
-  FlashStorage_SAMD_Impl.h
+  FlashAsEEPROM_SAMD.h
   For SAMD21/SAMD51 using Flash emulated-EEPROM
 
   The FlashStorage_SAMD library aims to provide a convenient way to store and retrieve user's data using the non-volatile flash memory
@@ -40,21 +40,10 @@
 
 #pragma once
 
-#ifndef FlashStorage_SAMD_Impl_h
-#define FlashStorage_SAMD_Impl_h
+#ifndef FlashAsEEPROM_SAMD_h
+#define FlashAsEEPROM_SAMD_h
 
-#if   ( defined(__SAMD51__) || defined(__SAMD51J20A__) || defined(__SAMD51J19A__) || defined(__SAMD51G19A__) || defined(__SAMD51P19A__) )
-  #include "FlashStorage_SAMD51.h"
-#elif ( defined(ARDUINO_SAMD_ZERO) || defined(ARDUINO_SAMD_MKR1000) || defined(ARDUINO_SAMD_MKRWIFI1010) \
-      || defined(ARDUINO_SAMD_NANO_33_IOT) || defined(ARDUINO_SAMD_MKRFox1200) || defined(ARDUINO_SAMD_MKRWAN1300) \
-      || defined(ARDUINO_SAMD_MKRWAN1310)  || defined(ARDUINO_SAMD_MKRGSM1400) || defined(ARDUINO_SAMD_MKRNB1500) \
-      || defined(ARDUINO_SAMD_MKRVIDOR4000)  || defined(ARDUINO_SAMD_CIRCUITPLAYGROUND_EXPRESS) || defined(ARDUINO_SAML_INDUSTRUINO_420MAKER) \
-      || defined(__SAMD21E15A__) || defined(__SAMD21E16A__) || defined(__SAMD21E17A__) || defined(__SAMD21E18A__) \
-      || defined(__SAMD21G15A__) || defined(__SAMD21G16A__) || defined(__SAMD21G17A__) || defined(__SAMD21G18A__) \
-      || defined(__SAMD21J15A__) || defined(__SAMD21J16A__) || defined(__SAMD21J17A__) || defined(__SAMD21J18A__) )
-  #include "FlashStorage_SAMD21.h"
-#else
-  #error This code is intended to run only on the SAMD21 or SAMD51 boards ! Please check your Tools->Board setting.
-#endif
+#include <FlashStorage_SAMD.hpp>
+#include <FlashStorage_SAMD_Impl.h>
 
-#endif    //#ifndef FlashStorage_SAMD_Impl_h
+#endif    //#ifndef FlashAsEEPROM_SAMD_h
