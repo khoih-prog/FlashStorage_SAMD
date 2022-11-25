@@ -58,15 +58,19 @@ struct MyObject
 void printMyObject(MyObject &customVar)
 {
   Serial.println("===============");
-  Serial.print("Field1: "); Serial.println(customVar.field1, 5);
-  Serial.print("Field2: "); Serial.println(customVar.field2);
-  Serial.print("Name: "); Serial.println(customVar.name);
+  Serial.print("Field1: ");
+  Serial.println(customVar.field1, 5);
+  Serial.print("Field2: ");
+  Serial.println(customVar.field2);
+  Serial.print("Name: ");
+  Serial.println(customVar.name);
   Serial.println("===============");
 }
 
 void secondTest()
 {
-  int eeAddress = START_ADDRESS + sizeof(WRITTEN_SIGNATURE) + sizeof(float); //Move address to the next byte after float 'f'.
+  int eeAddress = START_ADDRESS + sizeof(WRITTEN_SIGNATURE) + sizeof(
+                    float); //Move address to the next byte after float 'f'.
 
   MyObject customVar; //Variable to store custom object read from EEPROM.
   EEPROM.get(eeAddress, customVar);
@@ -78,11 +82,13 @@ void secondTest()
 void setup()
 {
   Serial.begin(115200);
+
   while (!Serial);
 
   delay(200);
 
-  Serial.print(F("\nStart EEPROM_get on ")); Serial.println(BOARD_NAME);
+  Serial.print(F("\nStart EEPROM_get on "));
+  Serial.println(BOARD_NAME);
   Serial.println(FLASH_STORAGE_SAMD_VERSION);
 
   Serial.print("EEPROM length: ");

@@ -9,17 +9,17 @@
 
   Built by Khoi Hoang https://github.com/khoih-prog/FlashStorage_SAMD
   Licensed under LGPLv3 license
-  
+
   Orginally written by A. Christian
-  
+
   Copyright (c) 2015-2016 Arduino LLC.  All right reserved.
   Copyright (c) 2020 Khoi Hoang.
-  
-  This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License 
+
+  This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License
   as published bythe Free Software Foundation, either version 3 of the License, or (at your option) any later version.
   This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
-  You should have received a copy of the GNU Lesser General Public License along with this library. 
+  You should have received a copy of the GNU Lesser General Public License along with this library.
   If not, see (https://www.gnu.org/licenses/)
  ******************************************************************************************************************************************/
 /***
@@ -44,11 +44,13 @@
 void setup()
 {
   Serial.begin(115200);
+
   while (!Serial);
 
   delay(200);
 
-  Serial.print(F("\nStart EEPROM_iteration on ")); Serial.println(BOARD_NAME);
+  Serial.print(F("\nStart EEPROM_iteration on "));
+  Serial.println(BOARD_NAME);
   Serial.println(FLASH_STORAGE_SAMD_VERSION);
 
   Serial.print("EEPROM length: ");
@@ -58,9 +60,9 @@ void setup()
     Iterate the EEPROM using a for loop.
   ***/
 
-  for (int index = 0 ; index < EEPROM.length() ; index++) 
+  for (int index = 0 ; index < EEPROM.length() ; index++)
   {
-    // Add one to each cell in the EEPROM   
+    // Add one to each cell in the EEPROM
     EEPROM.write(index, EEPROM.read(index) + 1);
   }
 
@@ -74,9 +76,9 @@ void setup()
 
   int index = 0;
 
-  while (index < EEPROM.length()) 
+  while (index < EEPROM.length())
   {
-    // Add one to each cell in the EEPROM   
+    // Add one to each cell in the EEPROM
     EEPROM.write(index, EEPROM.read(index) + 1);
     index++;
   }
@@ -101,7 +103,7 @@ void setup()
   EEPROM.commit();
 
   Serial.println("Done do-while loop");
-  
+
 } //End of setup function.
 
 void loop() {}

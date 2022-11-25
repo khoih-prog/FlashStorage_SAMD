@@ -9,17 +9,17 @@
 
   Built by Khoi Hoang https://github.com/khoih-prog/FlashStorage_SAMD
   Licensed under LGPLv3 license
-  
+
   Orginally written by A. Christian
-  
+
   Copyright (c) 2015-2016 Arduino LLC.  All right reserved.
   Copyright (c) 2020 Khoi Hoang.
-  
-  This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License 
+
+  This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License
   as published bythe Free Software Foundation, either version 3 of the License, or (at your option) any later version.
   This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
-  You should have received a copy of the GNU Lesser General Public License along with this library. 
+  You should have received a copy of the GNU Lesser General Public License along with this library.
   If not, see (https://www.gnu.org/licenses/)
  ******************************************************************************************************************************************/
 
@@ -31,25 +31,28 @@
 // To be included only in main(), .ino with setup() to avoid `Multiple Definitions` Linker Error
 #include <FlashStorage_SAMD.h>
 
-void setup() 
+void setup()
 {
   Serial.begin(115200);
+
   while (!Serial);
 
   delay(200);
 
-  Serial.print(F("\nStart EEPROM_Clear on ")); Serial.println(BOARD_NAME);
+  Serial.print(F("\nStart EEPROM_Clear on "));
+  Serial.println(BOARD_NAME);
   Serial.println(FLASH_STORAGE_SAMD_VERSION);
-  
+
   // initialize the LED pin as an output.
   pinMode(LED_BUILTIN, OUTPUT);
   digitalWrite(LED_BUILTIN, LOW);
 
-  Serial.print("Emulated EEPROM length (bytes) = "); Serial.println(EEPROM.length());
+  Serial.print("Emulated EEPROM length (bytes) = ");
+  Serial.println(EEPROM.length());
 
   unsigned long startMillis = millis();
-  
-  for (int i = 0 ; i < EEPROM.length() ; i++) 
+
+  for (int i = 0 ; i < EEPROM.length() ; i++)
   {
     EEPROM.write(i, 0);
   }
@@ -58,13 +61,14 @@ void setup()
 
   // The time spent can be very short (5-25ms) if the EEPROM is not dirty.
   // For Seeed XIAO, the time is around 22 / 42 ms for 2048 / 4096 bytes of emulated-EEPROM
-  Serial.print("Done clearing emulated EEPROM. Time spent (ms) = "); Serial.println(millis() - startMillis);
+  Serial.print("Done clearing emulated EEPROM. Time spent (ms) = ");
+  Serial.println(millis() - startMillis);
 
   // turn the LED on when we're done
   digitalWrite(LED_BUILTIN, HIGH);
 }
 
-void loop() 
+void loop()
 {
   /** Empty loop. **/
 }

@@ -9,17 +9,17 @@
 
   Built by Khoi Hoang https://github.com/khoih-prog/FlashStorage_SAMD
   Licensed under LGPLv3 license
-  
+
   Orginally written by A. Christian
-  
+
   Copyright (c) 2015-2016 Arduino LLC.  All right reserved.
   Copyright (c) 2020 Khoi Hoang.
-  
-  This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License 
+
+  This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License
   as published bythe Free Software Foundation, either version 3 of the License, or (at your option) any later version.
   This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
-  You should have received a copy of the GNU Lesser General Public License along with this library. 
+  You should have received a copy of the GNU Lesser General Public License along with this library.
   If not, see (https://www.gnu.org/licenses/)
  ******************************************************************************************************************************************/
 /***
@@ -49,11 +49,13 @@ int address = 0;
 void setup()
 {
   Serial.begin(115200);
+
   while (!Serial);
 
   delay(200);
 
-  Serial.print(F("\nStart EEPROM_read on ")); Serial.println(BOARD_NAME);
+  Serial.print(F("\nStart EEPROM_read on "));
+  Serial.println(BOARD_NAME);
   Serial.println(FLASH_STORAGE_SAMD_VERSION);
 
   Serial.print("EEPROM length: ");
@@ -63,12 +65,12 @@ void setup()
 void loop()
 {
   unsigned long startMillis = millis();
-  
-  for (int i = 0 ; i < EEPROM.length() ; i++) 
+
+  for (int i = 0 ; i < EEPROM.length() ; i++)
   {
     /***
       The function EEPROM.update(address, val) is equivalent to the following:
-  
+
       if( EEPROM.read(address) != val )
       {
         EEPROM.write(address, val);
@@ -76,10 +78,11 @@ void loop()
     ***/
     EEPROM.update(i, (uint8_t) analogRead(0));
   }
-  
+
   EEPROM.commit();
 
-  Serial.print("Done updating emulated EEPROM. Time spent (ms) = "); Serial.println(millis() - startMillis);
+  Serial.print("Done updating emulated EEPROM. Time spent (ms) = ");
+  Serial.println(millis() - startMillis);
 
   delay(60000);
 }

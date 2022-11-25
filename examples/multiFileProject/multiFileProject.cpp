@@ -1,6 +1,6 @@
 /****************************************************************************************************************************
   multiFileProject.cpp
-  
+
   For SAMD21/SAMD51 using Flash emulated-EEPROM
 
   The FlashStorage_SAMD library aims to provide a convenient way to store and retrieve user's data using the non-volatile flash memory
@@ -35,7 +35,10 @@ void testEEPROM()
     EEPROM.get(storedAddress + sizeof(signature), owner);
 
     // Say hello to the returning user!
-    Serial.print("Hi "); Serial.print(owner.name); Serial.print(" "); Serial.print(owner.surname);
+    Serial.print("Hi ");
+    Serial.print(owner.name);
+    Serial.print(" ");
+    Serial.print(owner.surname);
     Serial.println(", nice to see you again :-)");
 
     Serial.println("Clearing WRITTEN_SIGNATURE for next try");
@@ -72,8 +75,10 @@ void testEEPROM()
     }
 
     // Print a confirmation of the data inserted.
-    Serial.print("<< Your name: "); Serial.print(owner.name);
-    Serial.print(". Your surname: "); Serial.print(owner.surname);
+    Serial.print("<< Your name: ");
+    Serial.print(owner.name);
+    Serial.print(". Your surname: ");
+    Serial.print(owner.surname);
     Serial.println(" >> have been saved. Thank you!");
     Serial.println("You can reset to check emulated-EEPROM data retention.");
   }

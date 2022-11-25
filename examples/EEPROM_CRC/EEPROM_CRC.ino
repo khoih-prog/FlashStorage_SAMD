@@ -9,17 +9,17 @@
 
   Built by Khoi Hoang https://github.com/khoih-prog/FlashStorage_SAMD
   Licensed under LGPLv3 license
-  
+
   Orginally written by A. Christian
-  
+
   Copyright (c) 2015-2016 Arduino LLC.  All right reserved.
   Copyright (c) 2020 Khoi Hoang.
-  
-  This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License 
+
+  This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License
   as published bythe Free Software Foundation, either version 3 of the License, or (at your option) any later version.
   This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
-  You should have received a copy of the GNU Lesser General Public License along with this library. 
+  You should have received a copy of the GNU Lesser General Public License along with this library.
   If not, see (https://www.gnu.org/licenses/)
  ******************************************************************************************************************************************/
 /***
@@ -39,7 +39,7 @@
 // To be included only in main(), .ino with setup() to avoid `Multiple Definitions` Linker Error
 #include <FlashStorage_SAMD.h>
 
-unsigned long eeprom_crc() 
+unsigned long eeprom_crc()
 {
   const unsigned long crc_table[16] =
   {
@@ -64,11 +64,13 @@ unsigned long eeprom_crc()
 void setup()
 {
   Serial.begin(115200);
+
   while (!Serial);
 
   delay(200);
 
-  Serial.print(F("\nStart EEPROM_CRC on ")); Serial.println(BOARD_NAME);
+  Serial.print(F("\nStart EEPROM_CRC on "));
+  Serial.println(BOARD_NAME);
   Serial.println(FLASH_STORAGE_SAMD_VERSION);
 
   //Print length of data to run CRC on.
@@ -81,7 +83,7 @@ void setup()
   Serial.print("Done!");
 }
 
-void loop() 
+void loop()
 {
   /* Empty loop */
 }

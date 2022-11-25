@@ -9,17 +9,17 @@
 
   Built by Khoi Hoang https://github.com/khoih-prog/FlashStorage_SAMD
   Licensed under LGPLv3 license
-  
+
   Orginally written by A. Christian
-  
+
   Copyright (c) 2015-2016 Arduino LLC.  All right reserved.
   Copyright (c) 2020 Khoi Hoang.
-  
-  This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License 
+
+  This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License
   as published bythe Free Software Foundation, either version 3 of the License, or (at your option) any later version.
   This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
-  You should have received a copy of the GNU Lesser General Public License along with this library. 
+  You should have received a copy of the GNU Lesser General Public License along with this library.
   If not, see (https://www.gnu.org/licenses/)
  ******************************************************************************************************************************************/
 
@@ -46,11 +46,13 @@ typedef struct
 void setup()
 {
   Serial.begin(115200);
+
   while (!Serial);
 
   delay(200);
 
-  Serial.print(F("\nStart StoreNameAndSurname on ")); Serial.println(BOARD_NAME);
+  Serial.print(F("\nStart StoreNameAndSurname on "));
+  Serial.println(BOARD_NAME);
   Serial.println(FLASH_STORAGE_SAMD_VERSION);
 
   Serial.print("EEPROM length: ");
@@ -71,7 +73,10 @@ void setup()
     EEPROM.get(storedAddress + sizeof(signature), owner);
 
     // Say hello to the returning user!
-    Serial.print("Hi "); Serial.print(owner.name); Serial.print(" "); Serial.print(owner.surname);
+    Serial.print("Hi ");
+    Serial.print(owner.name);
+    Serial.print(" ");
+    Serial.print(owner.surname);
     Serial.println(", nice to see you again :-)");
 
     Serial.println("Clearing WRITTEN_SIGNATURE for next try");
@@ -108,8 +113,10 @@ void setup()
     }
 
     // Print a confirmation of the data inserted.
-    Serial.print("<< Your name: "); Serial.print(owner.name);
-    Serial.print(". Your surname: "); Serial.print(owner.surname);
+    Serial.print("<< Your name: ");
+    Serial.print(owner.name);
+    Serial.print(". Your surname: ");
+    Serial.print(owner.surname);
     Serial.println(" >> have been saved. Thank you!");
     Serial.println("You can reset to check emulated-EEPROM data retention.");
   }

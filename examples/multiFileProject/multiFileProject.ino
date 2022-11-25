@@ -1,6 +1,6 @@
 /****************************************************************************************************************************
   multiFileProject.ino
-  
+
   For SAMD21/SAMD51 using Flash emulated-EEPROM
 
   The FlashStorage_SAMD library aims to provide a convenient way to store and retrieve user's data using the non-volatile flash memory
@@ -21,7 +21,7 @@
       || defined(__SAMD21E15A__) || defined(__SAMD21E16A__) || defined(__SAMD21E17A__) || defined(__SAMD21E18A__) \
       || defined(__SAMD21G15A__) || defined(__SAMD21G16A__) || defined(__SAMD21G17A__) || defined(__SAMD21G18A__) \
       || defined(__SAMD21J15A__) || defined(__SAMD21J16A__) || defined(__SAMD21J17A__) || defined(__SAMD21J18A__) )
-  #error This code is designed to run on SAMD21/SAMD51 platform! Please check your Tools->Board setting.
+#error This code is designed to run on SAMD21/SAMD51 platform! Please check your Tools->Board setting.
 #endif
 
 #define FLASH_STORAGE_SAMD_VERSION_MIN_TARGET      "FlashStorage_SAMD v1.3.2"
@@ -32,26 +32,29 @@
 // To be included only in main(), .ino with setup() to avoid `Multiple Definitions` Linker Error
 #include "FlashStorage_SAMD.h"
 
-void setup() 
+void setup()
 {
   Serial.begin(115200);
+
   while (!Serial);
-  
+
   Serial.println("\nStart multiFileProject");
   Serial.println(FLASH_STORAGE_SAMD_VERSION);
 
 #if defined(FLASH_STORAGE_SAMD_VERSION_MIN)
+
   if (FLASH_STORAGE_SAMD_VERSION_INT < FLASH_STORAGE_SAMD_VERSION_MIN)
   {
     Serial.print("Warning. Must use this example on Version equal or later than : ");
     Serial.println(FLASH_STORAGE_SAMD_VERSION_MIN_TARGET);
   }
+
 #endif
 
   testEEPROM();
 }
 
-void loop() 
+void loop()
 {
   // put your main code here, to run repeatedly:
 }
