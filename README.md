@@ -6,7 +6,12 @@
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](#Contributing)
 [![GitHub issues](https://img.shields.io/github/issues/khoih-prog/FlashStorage_SAMD.svg)](http://github.com/khoih-prog/FlashStorage_SAMD/issues)
 
-<a href="https://www.buymeacoffee.com/khoihprog6" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+
+<a href="https://www.buymeacoffee.com/khoihprog6" title="Donate to my libraries using BuyMeACoffee"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Donate to my libraries using BuyMeACoffee" style="height: 50px !important;width: 181px !important;" ></a>
+<a href="https://www.buymeacoffee.com/khoihprog6" title="Donate to my libraries using BuyMeACoffee"><img src="https://img.shields.io/badge/buy%20me%20a%20coffee-donate-orange.svg?logo=buy-me-a-coffee&logoColor=FFDD00" style="height: 20px !important;width: 200px !important;" ></a>
+<a href="https://profile-counter.glitch.me/khoih-prog/count.svg" title="Total khoih-prog Visitor count"><img src="https://profile-counter.glitch.me/khoih-prog/count.svg" style="height: 30px;width: 200px;"></a>
+<a href="https://profile-counter.glitch.me/khoih-prog-FlashStorage_SAMD/count.svg" title="FlashStorage_SAMD Visitor count"><img src="https://profile-counter.glitch.me/khoih-prog-FlashStorage_SAMD/count.svg" style="height: 30px;width: 200px;"></a>
+
 
 ---
 ---
@@ -29,6 +34,7 @@
       * [For core version v1.8.9-](#for-core-version-v189-)
   * [2. For Adafruit SAMD boards](#2-for-adafruit-samd-boards)
   * [3. For Seeeduino SAMD boards](#3-for-seeeduino-samd-boards)
+  * [4. For SparkFun SAMD boards](#4-for-SparkFun-samd-boards) 
 * [HOWTO Fix `Multiple Definitions` Linker Error](#howto-fix-multiple-definitions-linker-error) 
 * [Limited number of writes](#limited-number-of-writes)
 * [Usage](#usage)
@@ -115,13 +121,14 @@ The flash memory, generally used to store the firmware code, can also be used to
 ## Prerequisites
 
  1. [`Arduino IDE 1.8.19+` for Arduino](https://github.com/arduino/Arduino). [![GitHub release](https://img.shields.io/github/release/arduino/Arduino.svg)](https://github.com/arduino/Arduino/releases/latest)
- 2. [`Arduino SAMD core 1.8.12+`](https://github.com/arduino/ArduinoCore-samd) for SAMD ARM Cortex-M0+ boards. [![GitHub release](https://img.shields.io/github/release/arduino/ArduinoCore-samd.svg)](https://github.com/arduino/ArduinoCore-samd/releases/latest)
- 3. [`Adafruit SAMD core 1.7.8+`](https://github.com/adafruit/ArduinoCore-samd) for SAMD ARM Cortex-M0+ and M4 boards (Nano 33 IoT, etc.). [![GitHub release](https://img.shields.io/github/release/adafruit/ArduinoCore-samd.svg)](https://github.com/adafruit/ArduinoCore-samd/releases/latest)
- 4. [`Seeeduino SAMD core 1.8.2+`](https://github.com/Seeed-Studio/ArduinoCore-samd) for SAMD21/SAMD51 boards (XIAO M0, Wio Terminal, etc.). [![Latest release](https://img.shields.io/github/release/Seeed-Studio/ArduinoCore-samd.svg)](https://github.com/Seeed-Studio/ArduinoCore-samd/releases/latest/)
+ 2. [`Arduino SAMD core 1.8.13+`](https://github.com/arduino/ArduinoCore-samd) for SAMD ARM Cortex-M0+ boards. [![GitHub release](https://img.shields.io/github/release/arduino/ArduinoCore-samd.svg)](https://github.com/arduino/ArduinoCore-samd/releases/latest)
+ 3. [`Adafruit SAMD core 1.7.11+`](https://github.com/adafruit/ArduinoCore-samd) for SAMD ARM Cortex-M0+ and M4 boards (Nano 33 IoT, etc.). [![GitHub release](https://img.shields.io/github/release/adafruit/ArduinoCore-samd.svg)](https://github.com/adafruit/ArduinoCore-samd/releases/latest)
+ 4. [`Seeeduino SAMD core 1.8.3+`](https://github.com/Seeed-Studio/ArduinoCore-samd) for SAMD21/SAMD51 boards (XIAO M0, Wio Terminal, etc.). [![Latest release](https://img.shields.io/github/release/Seeed-Studio/ArduinoCore-samd.svg)](https://github.com/Seeed-Studio/ArduinoCore-samd/releases/latest/)
  5. [`IndustruinoSAMD core 1.0.3+`](https://github.com/Industruino/IndustruinoSAMD) for SAMD21 boards (Industruino DG21, etc.).
  6. [`IndustruinoSAML core 1.0.0+`](https://github.com/Industruino/IndustruinoSAMx) for SAML21 boards (Industruino 420MAKER, etc.).
  7. [`Sparkfun SAMD core 1.8.4+`](https://github.com/sparkfun/Arduino_Boards) for SAMD21/SAMD51 boards (SparkFun_RedBoard_Turbo, SparkFun_SAMD51_Thing_Plus, etc.).
  
+---
 ---
 
 ## Installation
@@ -140,11 +147,12 @@ Another way to install is to:
 4. Copy whole 
   - `FlashStorage_SAMD-master` folder to Arduino libraries' directory such as `~/Arduino/libraries/`.
 
+
 ### VS Code & PlatformIO
 
 1. Install [VS Code](https://code.visualstudio.com/)
 2. Install [PlatformIO](https://platformio.org/platformio-ide)
-3. Install [**FlashStorage_SAMD** library](https://platformio.org/lib/show/11242/FlashStorage_SAMD) by using [Library Manager](https://platformio.org/lib/show/11242/FlashStorage_SAMD/installation). Search for **FlashStorage_SAMD** in [Platform.io Author's Libraries](https://platformio.org/lib/search?query=author:%22Khoi%20Hoang%22)
+3. Install [**FlashStorage_SAMD** library](https://registry.platformio.org/libraries/khoih-prog/FlashStorage_SAMD) by using [Library Manager](https://registry.platformio.org/libraries/khoih-prog/FlashStorage_SAMD/installation). Search for **FlashStorage_SAMD** in [Platform.io Author's Libraries](https://platformio.org/lib/search?query=author:%22Khoi%20Hoang%22)
 4. Use included [platformio.ini](platformio/platformio.ini) file from examples to ensure that all dependent libraries will installed automatically. Please visit documentation for the other options and examples at [Project Configuration File](https://docs.platformio.org/page/projectconf.html)
 
 ---
@@ -154,13 +162,13 @@ Another way to install is to:
 
 #### 1. For Arduino SAMD boards
  
- ***To be able to compile, run and automatically detect and display BOARD_NAME on Arduino SAMD (Nano-33-IoT, etc) boards***, you have to copy the whole [Arduino SAMD Packages_Patches](Packages_Patches/arduino/hardware/samd/1.8.12) directory into Arduino SAMD directory (~/.arduino15/packages/arduino/hardware/samd/1.8.12).
+ ***To be able to compile without error and automatically detect and display BOARD_NAME on Arduino SAMD (Nano-33-IoT, etc) boards***, you have to copy the whole [Arduino SAMD Packages_Patches](Packages_Patches/arduino/hardware/samd/1.8.13) directory into Arduino SAMD directory (~/.arduino15/packages/arduino/hardware/samd/1.8.13).
  
 #### For core version v1.8.10+
 
-Supposing the Arduino SAMD version is 1.8.12. Now only one file must be copied into the directory:
+Supposing the Arduino SAMD version is 1.8.13. Now only one file must be copied into the directory:
 
-- `~/.arduino15/packages/arduino/hardware/samd/1.8.12/platform.txt`
+- `~/.arduino15/packages/arduino/hardware/samd/1.8.13/platform.txt`
 
 Whenever a new version is installed, remember to copy this files into the new version directory. For example, new version is x.yy.zz
 
@@ -193,13 +201,13 @@ Whenever the above-mentioned compiler error issue is fixed with the new Arduino 
 
 #### 2. For Adafruit SAMD boards
  
- ***To be able to compile, run and automatically detect and display BOARD_NAME on Adafruit SAMD (Itsy-Bitsy M4, etc) boards***, you have to copy the whole [Adafruit SAMD Packages_Patches](Packages_Patches/adafruit/hardware/samd/1.7.7) directory into Adafruit samd directory (~/.arduino15/packages/adafruit/hardware/samd/1.7.7). 
+ ***To be able to compile without error and automatically detect and display BOARD_NAME on Adafruit SAMD (Itsy-Bitsy M4, etc) boards***, you have to copy the files in [Adafruit SAMD Packages_Patches](Packages_Patches/adafruit/hardware/samd/1.7.11) into Adafruit samd directory (~/.arduino15/packages/adafruit/hardware/samd/1.7.11). 
 
-Supposing the Adafruit SAMD core version is 1.7.7. This file must be copied into the directory:
+Supposing the Adafruit SAMD core version is 1.7.11. This file must be copied into the directory:
 
-- `~/.arduino15/packages/adafruit/hardware/samd/1.7.7/platform.txt`
-- `~/.arduino15/packages/adafruit/hardware/samd/1.7.7/cores/arduino/Print.h`
-- `~/.arduino15/packages/adafruit/hardware/samd/1.7.7/cores/arduino/Print.cpp`
+- `~/.arduino15/packages/adafruit/hardware/samd/1.7.11/platform.txt`
+- `~/.arduino15/packages/adafruit/hardware/samd/1.7.11/cores/arduino/Print.h`
+- `~/.arduino15/packages/adafruit/hardware/samd/1.7.11/cores/arduino/Print.cpp`
 
 Whenever a new version is installed, remember to copy this file into the new version directory. For example, new version is x.yy.zz
 This file must be copied into the directory:
@@ -210,14 +218,14 @@ This file must be copied into the directory:
 
 #### 3. For Seeeduino SAMD boards
  
- ***To be able to compile, run and automatically detect and display BOARD_NAME on Seeeduino SAMD (XIAO M0, Wio Terminal, etc) boards***, you have to copy the whole [Seeeduino SAMD Packages_Patches](Packages_Patches/Seeeduino/hardware/samd/1.8.2) directory into Seeeduino samd directory (~/.arduino15/packages/Seeeduino/hardware/samd/1.8.2). 
+ ***To be able to compile without error and automatically detect and display BOARD_NAME on Seeeduino SAMD (XIAO M0, Wio Terminal, etc) boards***, you have to copy the files in [Seeeduino SAMD Packages_Patches](Packages_Patches/Seeeduino/hardware/samd/1.8.3) into Seeeduino samd directory (~/.arduino15/packages/Seeeduino/hardware/samd/1.8.3). 
 
-Supposing the Seeeduino SAMD core version is 1.8.2. This file must be copied into the directory:
+Supposing the Seeeduino SAMD core version is 1.8.3. This file must be copied into the directory:
 
-- `~/.arduino15/packages/Seeeduino/hardware/samd/1.8.2/platform.txt`
-- `~/.arduino15/packages/Seeeduino/hardware/samd/1.8.2/cores/arduino/Arduino.h`
-- `~/.arduino15/packages/Seeeduino/hardware/samd/1.8.2/cores/arduino/Print.h`
-- `~/.arduino15/packages/Seeeduino/hardware/samd/1.8.2/cores/arduino/Print.cpp`
+- `~/.arduino15/packages/Seeeduino/hardware/samd/1.8.3/platform.txt`
+- `~/.arduino15/packages/Seeeduino/hardware/samd/1.8.3/cores/arduino/Arduino.h`
+- `~/.arduino15/packages/Seeeduino/hardware/samd/1.8.3/cores/arduino/Print.h`
+- `~/.arduino15/packages/Seeeduino/hardware/samd/1.8.3/cores/arduino/Print.cpp`
 
 Whenever a new version is installed, remember to copy this file into the new version directory. For example, new version is x.yy.zz
 This file must be copied into the directory:
@@ -226,6 +234,25 @@ This file must be copied into the directory:
 - `~/.arduino15/packages/Seeeduino/hardware/samd/x.yy.zz/cores/arduino/Arduino.h`
 - `~/.arduino15/packages/Seeeduino/hardware/samd/x.yy.zz/cores/arduino/Print.h`
 - `~/.arduino15/packages/Seeeduino/hardware/samd/x.yy.zz/cores/arduino/Print.cpp`
+
+#### 4. For SparkFun SAMD boards
+ 
+ ***To be able to compile without error and automatically detect and display BOARD_NAME on SparkFun SAMD (XIAO SparkFun_RedBoard_Turbo, SparkFun_SAMD51_Thing_Plus, etc) boards***, you have to copy the file [SparkFun SAMD Packages_Patches](Packages_Patches/SparkFun/hardware/samd/1.8.3) into SparkFun samd directory (~/.arduino15/packages/SparkFun/hardware/samd/1.8.3). 
+
+Supposing the SparkFun SAMD core version is 1.8.3. This file must be copied into the directory:
+
+- `~/.arduino15/packages/SparkFun/hardware/samd/1.8.3/cores/arduino/Print.h`
+- `~/.arduino15/packages/SparkFun/hardware/samd/1.8.3/cores/arduino/Print.cpp`
+- `~/.arduino15/packages/SparkFun/hardware/samd/1.8.3/cores/arduino51/Print.h`
+- `~/.arduino15/packages/SparkFun/hardware/samd/1.8.3/cores/arduino51/Print.cpp`
+
+Whenever a new version is installed, remember to copy this file into the new version directory. For example, new version is x.yy.zz
+This file must be copied into the directory:
+
+- `~/.arduino15/packages/SparkFun/hardware/samd/x.yy.zz/cores/arduino/Print.h`
+- `~/.arduino15/packages/SparkFun/hardware/samd/x.yy.zz/cores/arduino/Print.cpp`
+- `~/.arduino15/packages/SparkFun/hardware/samd/x.yy.zz/cores/arduino51/Print.h`
+- `~/.arduino15/packages/SparkFun/hardware/samd/x.yy.zz/cores/arduino51/Print.cpp`
 
 ---
 ---
@@ -236,14 +263,14 @@ The current library implementation, using `xyz-Impl.h` instead of standard `xyz.
 
 You can include this `.hpp` file
 
-```
+```cpp
 // Can be included as many times as necessary, without `Multiple Definitions` Linker Error
 #include "FlashStorage_SAMD.hpp"     //https://github.com/khoih-prog/FlashStorage_SAMD
 ```
 
 in many files. But be sure to use the following `.h` file **in just 1 `.h`, `.cpp` or `.ino` file**, which must **not be included in any other file**, to avoid `Multiple Definitions` Linker Error
 
-```
+```cpp
 // To be included only in main(), .ino with setup() to avoid `Multiple Definitions` Linker Error
 #include "FlashStorage_SAMD.h"           //https://github.com/khoih-prog/FlashStorage_SAMD
 ```
@@ -386,104 +413,7 @@ The API is very similar to the well-known [Arduino EEPROM library API](https://w
 ### Example [StoreNameAndSurname](examples/StoreNameAndSurname)
 
 
-```cpp
-// Demonstrate how to use FlashStorage_SAMD with an API that is similar to the EEPROM library to Store and retrieve structured data.
-//#define EEPROM_EMULATION_SIZE     (4 * 1024)
-
-// Use 0-2. Larger for more debugging messages
-#define FLASH_DEBUG       0
-
-// To be included only in main(), .ino with setup() to avoid `Multiple Definitions` Linker Error
-#include <FlashStorage_SAMD.h>
-
-const int WRITTEN_SIGNATURE = 0xBEEFDEED;
-
-// Create a structure that is big enough to contain a name
-// and a surname. The "valid" variable is set to "true" once
-// the structure is filled with actual data for the first time.
-typedef struct
-{
-  char name[100];
-  char surname[100];
-} Person;
-
-void setup()
-{
-  Serial.begin(115200);
-  while (!Serial);
-
-  delay(200);
-
-  Serial.print(F("\nStart StoreNameAndSurname on ")); Serial.println(BOARD_NAME);
-  Serial.println(FLASH_STORAGE_SAMD_VERSION);
-
-  Serial.print("EEPROM length: ");
-  Serial.println(EEPROM.length());
-
-  // Check signature at address 0
-  int signature;
-
-  // Create a "Person" variable and call it "owner"
-  uint16_t storedAddress = 0;
-  Person owner;
-
-  EEPROM.get(storedAddress, signature);
-
-  // If the EEPROM is empty then no WRITTEN_SIGNATURE
-  if (signature == WRITTEN_SIGNATURE)
-  {
-    EEPROM.get(storedAddress + sizeof(signature), owner);
-
-    // Say hello to the returning user!
-    Serial.print("Hi "); Serial.print(owner.name); Serial.print(" "); Serial.print(owner.surname);
-    Serial.println(", nice to see you again :-)");
-
-    Serial.println("Clearing WRITTEN_SIGNATURE for next try");
-
-    EEPROM.put(0, 0);
-    Serial.println("Done clearing signature in emulated EEPROM. You can reset now");
-  }
-  else
-  {
-    Serial.println("EEPROM is empty, writing WRITTEN_SIGNATURE and some example data:");
-
-    EEPROM.put(storedAddress, WRITTEN_SIGNATURE);
-
-    // ...in this case we ask for user data.
-    Serial.setTimeout(30000);
-    Serial.print("Insert your name : ");
-    String name = Serial.readStringUntil('\n');
-    Serial.println(name);
-    Serial.print("Insert your surname : ");
-    String surname = Serial.readStringUntil('\n');
-    Serial.println(surname);
-
-    // Fill the "owner" structure with the data entered by the user...
-    name.toCharArray(owner.name, 100);
-    surname.toCharArray(owner.surname, 100);
-
-    // ...and finally save everything into emulated-EEPROM
-    EEPROM.put(storedAddress + sizeof(signature), owner);
-
-    if (!EEPROM.getCommitASAP())
-    {
-      Serial.println("CommitASAP not set. Need commit()");
-      EEPROM.commit();
-    }
-
-    // Print a confirmation of the data inserted.
-    Serial.print("<< Your name: "); Serial.print(owner.name);
-    Serial.print(". Your surname: "); Serial.print(owner.surname);
-    Serial.println(" >> have been saved. Thank you!");
-    Serial.println("You can reset to check emulated-EEPROM data retention.");
-  }
-}
-
-void loop()
-{
-  // Do nothing...
-}
-```
+https://github.com/khoih-prog/FlashStorage_SAMD/blob/102e13e5552778cea993faae3f2f85bc87310155/examples/StoreNameAndSurname/StoreNameAndSurname.ino#L26-L128
 
 ---
 ---
@@ -497,7 +427,7 @@ The following is the sample terminal output when running example [**W5500_Blynk*
 
 #### 1.1. No Config Data with LOAD_DEFAULT_CONFIG_DATA = false => Config Portal don't loads default Credential
 
-```
+```cpp
 Start W5500_Blynk on ITSYBITSY_M4
 [936] ChkCrR:CrCCSum=0xaf50,CrRCSum=0xffffffff
 [936] CCSum=0x0,RCSum=0x0
@@ -526,7 +456,7 @@ FFFFF
 
 #### 1.2. Input valid credentials with LOAD_DEFAULT_CONFIG_DATA = false. Click `Save` => reboot
 
-```
+```cpp
 Start W5500_Blynk on ITSYBITSY_M4
 [1547] ChkCrR:CrCCSum=0x219f,CrRCSum=0x219f
 [1547] CCSum=0x0,RCSum=0x0
@@ -574,7 +504,7 @@ BBBBBBBBB BBBBBBBBBB BBBBBBBBBB BBBBBBBBBB BBBBBBBBBB BBBBBBBBBB BBBBBBBBBB
 
 #### 2.1. No data => input then save
 
-```
+```cpp
 Start StoreNameAndSurname on SEEED_XIAO_M0
 FlashStorage_SAMD v1.3.2
 EEPROM length: 1024
@@ -589,7 +519,7 @@ You can reset to check emulated-EEPROM data retention.
 
 #### 2.2. Data retention after reset
 
-```
+```cpp
 Start StoreNameAndSurname on SEEED_XIAO_M0
 FlashStorage_SAMD v1.3.2
 EEPROM length: 1024
@@ -604,7 +534,7 @@ Done clearing signature in emulated EEPROM. You can reset now
 
 #### 3.1. 1ms to clear 1K bytes emulated-EEPROM
 
-```
+```cpp
 Start EEPROM_Clear on SEEED_XIAO_M0
 FlashStorage_SAMD v1.3.2
 
@@ -616,7 +546,7 @@ Done clearing emulated EEPROM. Time spent (ms) = 11
 
 #### 3.2. 22ms to clear 2K bytes emulated-EEPROM
 
-```
+```cpp
 Start EEPROM_Clear on SEEED_XIAO_M0
 FlashStorage_SAMD v1.3.2
 Emulated EEPROM length (bytes) = 2048
@@ -625,7 +555,7 @@ Done clearing emulated EEPROM. Time spent (ms) = 22
 
 #### 3.3. 42ms to clear 4K bytes emulated-EEPROM
 
-```
+```cpp
 Start EEPROM_Clear on SEEED_XIAO_M0
 FlashStorage_SAMD v1.3.2
 Emulated EEPROM length (bytes) = 4096
@@ -638,7 +568,7 @@ Done clearing emulated EEPROM. Time spent (ms) = 42
 
 #### 4.1. No valid data, write signature and data
 
-```
+```cpp
 Start EEPROM_get on SEEED_XIAO_M0
 FlashStorage_SAMD v1.3.2
 EEPROM length: 1024
@@ -655,7 +585,7 @@ Reset to see how you can retrieve the values by using EEPROM_get!
 
 #### 4.2. Valid signature and data, read data
 
-```
+```cpp
 Start EEPROM_get on SEEED_XIAO_M0
 FlashStorage_SAMD v1.3.2
 EEPROM length: 1024
